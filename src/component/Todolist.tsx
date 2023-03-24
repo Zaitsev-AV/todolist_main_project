@@ -25,12 +25,13 @@ export const Todolist: React.FC<TodolistPropsType> = ( props ) => {
 	
 	return (
 		<div className={ s.card }>
-			<h2>{ title }</h2>
-			<UniversalInputField callBack={ addTaskHandler }/>
-			<div className={ s.cardTwo }>{ tasks.map( t => {
-				const onClickRemoveTask = () => {
-					removeTask( t.id, todolistID )
-				}
+			<div className={ s.cardInfo }>
+				<h2 className={s.title}>{ title }</h2>
+				<UniversalInputField callBack={ addTaskHandler }/>
+				<div className={s.tasks}>{ tasks.map( t => {
+					const onClickRemoveTask = () => {
+						removeTask( t.id, todolistID )
+					}
 					const onChangeInputStatus = (e: ChangeEvent<HTMLInputElement>) => {
 						onChangeTaskStatus(todolistID, t.id, e.currentTarget.checked)
 					}
@@ -44,11 +45,16 @@ export const Todolist: React.FC<TodolistPropsType> = ( props ) => {
 						</div>
 					
 					)
-			} ) }</div>
-			<button onClick={ () => onclickBtnFilterHandler( 'all' ) }>all</button>
-			<button onClick={ () => onclickBtnFilterHandler( 'active' ) }>active</button>
-			<button onClick={ () => onclickBtnFilterHandler( 'completed' ) }>completed</button>
+				} ) }</div>
+				<div className={s.btnFilter}>
+					<button onClick={ () => onclickBtnFilterHandler( 'all' ) }>All</button>
+					<button onClick={ () => onclickBtnFilterHandler( 'active' ) }>Active</button>
+					<button onClick={ () => onclickBtnFilterHandler( 'completed' ) }>Completed</button>
+				</div>
+				
+			</div>
 		</div>
+		
 		
 	);
 };

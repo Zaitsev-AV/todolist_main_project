@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
+import s from './UniversalInputField.module.css'
 
 export type UniversalInputFieldTypeProps = {
 callBack: (title: string)=> void
@@ -15,11 +16,17 @@ export const UniversalInputField: React.FC<UniversalInputFieldTypeProps> = ( pro
 	}
 	
 	return (
-		<>
-			<input value={title}
-			onChange={onChangeInputHandler}
-			/> <button onClick={onClickButtonHandler}>+</button>
-		</>
+		<div className={s.wrapper}>
+			<div className={s.textInputWrapper}>
+				<input value={title}
+				       onChange={onChangeInputHandler}
+				       placeholder={"Type Here"}
+				       className={s.textInput}
+				/>
+			</div>
+			<button className={s.btnInput} onClick={onClickButtonHandler}>+</button>
+		</div>
+		
 		
 	);
 };

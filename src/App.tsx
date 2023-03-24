@@ -13,7 +13,7 @@ export const App: React.FC = ( props ) => {
 	let todolistID2 = v1();
 	
 	const [ todolists, todolistsDispatch ] = useReducer( todolistReducer, [
-		{ id: todolistID1, title: "What to learn", filter: "active" },
+		{ id: todolistID1, title: "What to learn", filter: "all" },
 		{ id: todolistID2, title: "What to buy", filter: "all" }
 	] )
 	
