@@ -1,4 +1,5 @@
 import { v1 } from "uuid";
+import { FilterValueType } from "../App";
 
 export type taskReducerType = {
 	[key: string]: TaskType[]
@@ -9,7 +10,8 @@ export type TaskType = {
 	title: string
 	isDone: boolean
 }
-type ActionType = ReturnType<typeof RemoveTaskAC> | ReturnType<typeof AddTaskAC> | ReturnType<typeof ChangeTaskStatusAC>
+type ActionType = ReturnType<typeof RemoveTaskAC> | ReturnType<typeof AddTaskAC>
+	| ReturnType<typeof ChangeTaskStatusAC>
 
 
 export const taskReducer = ( state: taskReducerType, action: ActionType ): taskReducerType => {
@@ -71,3 +73,5 @@ export const ChangeTaskStatusAC = ( todolistID: string, taskID: string, newIsDon
 		}
 	} as const
 }
+
+

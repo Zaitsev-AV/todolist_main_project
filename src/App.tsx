@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import { v1 } from 'uuid';
-import { todolistReducer} from "./reducer/todolistReducer";
+import { ChangedFilterAC, todolistReducer } from "./reducer/todolistReducer";
 import { AddTaskAC, ChangeTaskStatusAC, RemoveTaskAC, taskReducer } from "./reducer/taskReducer";
 import { Todolist } from "./component/Todolist";
 import './App.css'
@@ -13,7 +13,7 @@ export const App: React.FC = ( props ) => {
 	let todolistID2 = v1();
 	
 	const [ todolists, todolistsDispatch ] = useReducer( todolistReducer, [
-		{ id: todolistID1, title: "What to learn", filter: "all" },
+		{ id: todolistID1, title: "What to learn", filter: "active" },
 		{ id: todolistID2, title: "What to buy", filter: "all" }
 	] )
 	
@@ -35,24 +35,33 @@ export const App: React.FC = ( props ) => {
 	const addTask = ( todolistID: string, title: string ) => {
 		taskDispatch( AddTaskAC( todolistID, title ) )
 	}
-	const onChangeTaskStatus = (todolistID: string, taskID: string, newIsDone: boolean) => {
-	taskDispatch(ChangeTaskStatusAC(todolistID, taskID, newIsDone))
+	const onChangeTaskStatus = ( todolistID: string, taskID: string, newIsDone: boolean ) => {
+		taskDispatch( ChangeTaskStatusAC( todolistID, taskID, newIsDone ) )
+	}
+	const changedFilter = ( todolistID: string, newFilter: FilterValueType ) => {
+		todolistsDispatch( ChangedFilterAC( todolistID, newFilter ) )
 	}
 	
 	
 	return (
-		
 		<div className={ 'app' }>
 			{
 				todolists.map( el => {
+					
+					let taskForTodolist = tasks[ el.id ]
+					el.filter === 'active' ? taskForTodolist = taskForTodolist.filter( el => !el.isDone )
+						: el.filter === 'completed' ? taskForTodolist = taskForTodolist.filter( el => el.isDone )
+						: 'all' // logic for filter
+					
 					return <Todolist
 						key={ el.id }
 						todolistID={ el.id }
 						title={ el.title }
-						tasks={ tasks[ el.id ] }
+						tasks={ taskForTodolist }
 						removeTask={ removeTask }
 						addTask={ addTask }
-						onChangeTaskStatus={onChangeTaskStatus}
+						onChangeTaskStatus={ onChangeTaskStatus }
+						changedFilter={changedFilter}
 					/>
 				} )
 			}
