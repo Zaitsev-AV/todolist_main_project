@@ -11,7 +11,7 @@ export type TaskType = {
 	isDone: boolean
 }
 type ActionType = ReturnType<typeof RemoveTaskAC> | ReturnType<typeof AddTaskAC>
-	| ReturnType<typeof ChangeTaskStatusAC>
+	| ReturnType<typeof ChangeTaskStatusAC> | ReturnType<typeof RemoveTasksObjAC>
 
 
 export const taskReducer = ( state: taskReducerType, action: ActionType ): taskReducerType => {
@@ -38,6 +38,9 @@ export const taskReducer = ( state: taskReducerType, action: ActionType ): taskR
 						:
 						el )
 			}
+		}
+		case "REMOVE-TASKS-OBJ": {
+			delete state[action.payload.todolistID] // удаляем из стейта с тасками таски удаленного тудулиста
 		}
 	}
 	return state
@@ -70,6 +73,14 @@ export const ChangeTaskStatusAC = ( todolistID: string, taskID: string, newIsDon
 			todolistID,
 			taskID,
 			newIsDone
+		}
+	} as const
+}
+export const RemoveTasksObjAC = (todolistID: string) => {
+	return {
+		type: 'REMOVE-TASKS-OBJ',
+		payload: {
+			todolistID
 		}
 	} as const
 }

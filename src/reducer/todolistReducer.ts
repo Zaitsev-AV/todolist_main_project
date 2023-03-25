@@ -14,6 +14,9 @@ export const todolistReducer = (state: TodolistReducerType[], action: ActionType
 				? {...el, filter: action.payload.newFilter}
 				: el)
 		}
+		case "REMOVE-TODOLIST": {
+			return state.filter(s => s.id !== action.payload.todolistID)
+		}
 		default : Error("I'm not understand this action type")
 	}
 	return state
@@ -29,4 +32,13 @@ export const ChangedFilterAC = (todolistID: string, newFilter: FilterValueType) 
 	} as const
 }
 
-type ActionType = ReturnType<typeof ChangedFilterAC>
+export const RemoveTodolistAC = (todolistID: string) => {
+	return {
+		type: "REMOVE-TODOLIST",
+		payload: {
+			todolistID
+		}
+	} as const
+}
+
+type ActionType = ReturnType<typeof ChangedFilterAC> | ReturnType<typeof RemoveTodolistAC>

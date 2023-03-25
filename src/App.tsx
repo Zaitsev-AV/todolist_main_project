@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import { v1 } from 'uuid';
-import { ChangedFilterAC, todolistReducer } from "./reducer/todolistReducer";
-import { AddTaskAC, ChangeTaskStatusAC, RemoveTaskAC, taskReducer } from "./reducer/taskReducer";
+import { ChangedFilterAC, RemoveTodolistAC, todolistReducer } from "./reducer/todolistReducer";
+import { AddTaskAC, ChangeTaskStatusAC, RemoveTaskAC, RemoveTasksObjAC, taskReducer } from "./reducer/taskReducer";
 import { Todolist } from "./component/Todolist";
 import './App.css'
 
@@ -41,6 +41,10 @@ export const App: React.FC = ( props ) => {
 	const changedFilter = ( todolistID: string, newFilter: FilterValueType ) => {
 		todolistsDispatch( ChangedFilterAC( todolistID, newFilter ) )
 	}
+	const removeTodolist = ( todolistID: string ) => {
+		todolistsDispatch( RemoveTodolistAC( todolistID ) )
+		taskDispatch( RemoveTasksObjAC( todolistID ) )
+	}
 	
 	
 	return (
@@ -61,7 +65,8 @@ export const App: React.FC = ( props ) => {
 						removeTask={ removeTask }
 						addTask={ addTask }
 						onChangeTaskStatus={ onChangeTaskStatus }
-						changedFilter={changedFilter}
+						changedFilter={ changedFilter }
+						removeTodolist={ removeTodolist }
 					/>
 				} )
 			}

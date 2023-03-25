@@ -12,9 +12,13 @@ export type TodolistPropsType = {
 	addTask: ( todolistID: string, title: string ) => void
 	onChangeTaskStatus: ( todolistID: string, taskID: string, newIsDone: boolean ) => void
 	changedFilter: ( todolistID: string, newFilter: FilterValueType ) => void
+	removeTodolist: (todolistID: string) => void
 };
 export const Todolist: React.FC<TodolistPropsType> = ( props ) => {
-	const { todolistID, title, tasks, removeTask, addTask, onChangeTaskStatus, changedFilter } = props
+	const { todolistID, title,
+		tasks, removeTask, addTask,
+		onChangeTaskStatus, changedFilter,
+		removeTodolist } = props
 	const addTaskHandler = ( title: string ) => addTask( todolistID, title )
 	
 	const onclickBtnFilterHandler = ( value: FilterValueType ) => {
@@ -22,11 +26,16 @@ export const Todolist: React.FC<TodolistPropsType> = ( props ) => {
 		// т.к решил что при дальниешем создании универсальной кнопки проще будет сделать ее тупой
 		// + не охота плодить лишние функции обработчики
 	}
+	const onClickRemoveTodolist = () => {
+		removeTodolist(todolistID)
+	}
 	
 	return (
 		<div className={ s.card }>
 			<div className={ s.cardInfo }>
-				<h2 className={s.title}>{ title }</h2>
+				<h2 className={s.title}>{ title }
+					<button onClick={onClickRemoveTodolist}>-</button>
+				</h2>
 				<UniversalInputField callBack={ addTaskHandler }/>
 				<div className={s.tasks}>{ tasks.map( t => {
 					const onClickRemoveTask = () => {
