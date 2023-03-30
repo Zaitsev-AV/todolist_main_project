@@ -1,4 +1,5 @@
 import { FilterValueType } from "../App";
+import { v1 } from "uuid";
 
 export type TodolistReducerType = {
     id: string
@@ -16,6 +17,10 @@ export const todolistReducer = (state: TodolistReducerType[], action: ActionType
 		}
 		case "REMOVE-TODOLIST": {
 			return state.filter(s => s.id !== action.payload.todolistID)
+		}
+		case "ADD-NEW-TODO-LIST": {
+			debugger
+			return [{ id: action.payload.todolistID, title: action.payload.title, filter: "all" },...state]
 		}
 		default : Error("I'm not understand this action type")
 	}
@@ -41,4 +46,17 @@ export const RemoveTodolistAC = (todolistID: string) => {
 	} as const
 }
 
-type ActionType = ReturnType<typeof ChangedFilterAC> | ReturnType<typeof RemoveTodolistAC>
+export const AddNewTodolistAC = (title: string, todolistID: string) => {
+	debugger
+	return {
+		type: 'ADD-NEW-TODO-LIST',
+		payload: {
+			title,
+			todolistID
+		}
+	} as const
+}
+
+type ActionType = ReturnType<typeof ChangedFilterAC>
+	| ReturnType<typeof RemoveTodolistAC>
+| ReturnType<typeof AddNewTodolistAC>

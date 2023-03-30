@@ -1,9 +1,10 @@
 import React, { useReducer } from 'react';
 import { v1 } from 'uuid';
-import { ChangedFilterAC, RemoveTodolistAC, todolistReducer } from "./reducer/todolistReducer";
+import { AddNewTodolistAC, ChangedFilterAC, RemoveTodolistAC, todolistReducer } from "./reducer/todolistReducer";
 import { AddTaskAC, ChangeTaskStatusAC, RemoveTaskAC, RemoveTasksObjAC, taskReducer } from "./reducer/taskReducer";
 import { Todolist } from "./component/Todolist";
 import './App.css'
+import { UniversalInputField } from "./component/UniversalInputField";
 
 export type FilterValueType = 'all' | 'completed' | 'active'
 
@@ -45,10 +46,15 @@ export const App: React.FC = ( props ) => {
 		todolistsDispatch( RemoveTodolistAC( todolistID ) )
 		taskDispatch( RemoveTasksObjAC( todolistID ) )
 	}
-	
+	const addNewTodolist = (newTodolistTitle: string) => {
+		const todolistID = v1()
+		todolistsDispatch(AddNewTodolistAC(newTodolistTitle, todolistID))
+		taskDispatch(AddNewTodolistAC(newTodolistTitle, todolistID))
+	}
 	
 	return (
 		<div className={ 'app' }>
+			<UniversalInputField callBack={addNewTodolist}/>
 			{
 				todolists.map( el => {
 					
