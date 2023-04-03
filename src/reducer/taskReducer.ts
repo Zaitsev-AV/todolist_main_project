@@ -13,7 +13,7 @@ export type TaskType = {
 }
 type ActionType = ReturnType<typeof RemoveTaskAC> | ReturnType<typeof AddTaskAC>
 	| ReturnType<typeof ChangeTaskStatusAC> | ReturnType<typeof RemoveTasksObjAC>
-| ReturnType<typeof AddNewTodolistAC>
+	| ReturnType<typeof AddNewTodolistAC> | ReturnType<typeof ChangeTaskTitleAC>
 
 
 export const taskReducer = ( state: taskReducerType, action: ActionType ): taskReducerType => {
@@ -41,13 +41,24 @@ export const taskReducer = ( state: taskReducerType, action: ActionType ): taskR
 						el )
 			}
 		}
+		case "CHANGE-TASK-TITLE": {
+			return {
+				...state, [ action.payload.todolistID ]:
+					state[ action.payload.todolistID ].map( el => el.id === action.payload.taskID
+						?
+						{ ...el, title: action.payload.newTitle }
+						:
+						el )
+			}
+		}
 		case "ADD-NEW-TODO-LIST": {
 			debugger
-			return {...state, [action.payload.todolistID]: []} // добавляем в стейт новый массив с ключом который является id нового тудулиста
+			return { ...state, [ action.payload.todolistID ]: [] } // добавляем в стейт новый массив с ключом который является id нового тудулиста
 		}
 		case "REMOVE-TASKS-OBJ": {
-			delete state[action.payload.todolistID] // удаляем из стейта с тасками таски удаленного тудулиста
+			delete state[ action.payload.todolistID ] // удаляем из стейта с тасками таски удаленного тудулиста
 		}
+		
 	}
 	return state
 }
@@ -82,11 +93,22 @@ export const ChangeTaskStatusAC = ( todolistID: string, taskID: string, newIsDon
 		}
 	} as const
 }
-export const RemoveTasksObjAC = (todolistID: string) => {
+export const RemoveTasksObjAC = ( todolistID: string ) => {
 	return {
 		type: 'REMOVE-TASKS-OBJ',
 		payload: {
 			todolistID
+		}
+	} as const
+}
+
+export const ChangeTaskTitleAC = ( todolistID: string, taskID: string, newTitle: string ) => {
+	return {
+		type: 'CHANGE-TASK-TITLE',
+		payload: {
+			todolistID,
+			taskID,
+			newTitle
 		}
 	} as const
 }

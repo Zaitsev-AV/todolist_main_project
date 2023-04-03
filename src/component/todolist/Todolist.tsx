@@ -1,8 +1,9 @@
 import React, { ChangeEvent } from 'react';
-import { TaskType } from "../reducer/taskReducer";
-import { UniversalInputField } from "./UniversalInputField";
+import { TaskType } from "../../reducer/taskReducer";
+import { UniversalInputField } from "../UniversalInput/UniversalInputField";
 import s from './Todolist.module.css'
-import { FilterValueType } from "../App";
+import { FilterValueType } from "../../App";
+import { EditableText } from "../editableText/EditableText";
 
 export type TodolistPropsType = {
 	todolistID: string
@@ -13,12 +14,15 @@ export type TodolistPropsType = {
 	onChangeTaskStatus: ( todolistID: string, taskID: string, newIsDone: boolean ) => void
 	changedFilter: ( todolistID: string, newFilter: FilterValueType ) => void
 	removeTodolist: (todolistID: string) => void
+	changedTaskText:(todolistId: string, taskID: string, newTitle: string) => void
+	changedTodolistTitle:( todolistID: string, newTitle: string )=> void
 };
 export const Todolist: React.FC<TodolistPropsType> = ( props ) => {
 	const { todolistID, title,
 		tasks, removeTask, addTask,
 		onChangeTaskStatus, changedFilter,
-		removeTodolist } = props
+		removeTodolist, changedTaskText,
+		changedTodolistTitle} = props
 	const addTaskHandler = ( title: string ) => addTask( todolistID, title )
 	
 	const onclickBtnFilterHandler = ( value: FilterValueType ) => {
@@ -29,11 +33,18 @@ export const Todolist: React.FC<TodolistPropsType> = ( props ) => {
 	const onClickRemoveTodolist = () => {
 		removeTodolist(todolistID)
 	}
+	const newTaskTitleHandler = (taskID: string, newTitle: string) => {
+		changedTaskText(todolistID, taskID, newTitle )
+	}
+	const newTodolistTitleHandler = (newTitle: string) => {
+		changedTodolistTitle(todolistID, newTitle)
+	}
 	
 	return (
 		<div className={ s.card }>
 			<div className={ s.cardInfo }>
-				<h2 className={s.title}>{ title }
+				<h2 className={s.title}>
+					<EditableText callBack={(newTitle: string)=> newTodolistTitleHandler(newTitle)} title={title}/>
 					<button onClick={onClickRemoveTodolist}>-</button>
 				</h2>
 				<UniversalInputField callBack={ addTaskHandler }/>
@@ -46,10 +57,14 @@ export const Todolist: React.FC<TodolistPropsType> = ( props ) => {
 					}
 					return (
 						<div>
-						<span key={ t.id }>{ t.title } <input type={ "checkbox" }
+							<EditableText key={ t.id }
+							              title={t.title}
+							              callBack={(newTitle: string)=> newTaskTitleHandler(t.id, newTitle)}
+							/>
+						<input type={ "checkbox" }
 						                                      checked={ t.isDone }
 						                                      onChange={ onChangeInputStatus }
-						/> <button onClick={ onClickRemoveTask }>-</button></span>
+						/> <button onClick={ onClickRemoveTask }>-</button>
 						
 						</div>
 					

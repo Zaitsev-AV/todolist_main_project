@@ -19,12 +19,18 @@ export const todolistReducer = (state: TodolistReducerType[], action: ActionType
 			return state.filter(s => s.id !== action.payload.todolistID)
 		}
 		case "ADD-NEW-TODO-LIST": {
-			debugger
 			return [{ id: action.payload.todolistID, title: action.payload.title, filter: "all" },...state]
 		}
-		default : Error("I'm not understand this action type")
+		case "CHANGE-TODOLIST-TITLE": {
+			return state.map(el => el.id === action.payload.todolistID
+				?
+				{...el, title: action.payload.newTitle}
+				: el
+			)
+		}
+		default :
+			return state
 	}
-	return state
 }
 
 export const ChangedFilterAC = (todolistID: string, newFilter: FilterValueType) => {
@@ -47,7 +53,6 @@ export const RemoveTodolistAC = (todolistID: string) => {
 }
 
 export const AddNewTodolistAC = (title: string, todolistID: string) => {
-	debugger
 	return {
 		type: 'ADD-NEW-TODO-LIST',
 		payload: {
@@ -56,7 +61,16 @@ export const AddNewTodolistAC = (title: string, todolistID: string) => {
 		}
 	} as const
 }
+export const ChangeTodolistTitleAC = (todolistID: string, newTitle: string) => {
+	return {
+		type: 'CHANGE-TODOLIST-TITLE',
+		payload: {
+			todolistID,
+			newTitle
+		}
+	} as const
+}
 
 type ActionType = ReturnType<typeof ChangedFilterAC>
 	| ReturnType<typeof RemoveTodolistAC>
-| ReturnType<typeof AddNewTodolistAC>
+| ReturnType<typeof AddNewTodolistAC> | ReturnType<typeof ChangeTodolistTitleAC>

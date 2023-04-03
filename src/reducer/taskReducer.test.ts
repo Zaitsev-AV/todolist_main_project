@@ -1,19 +1,27 @@
 import { describe, it } from 'vitest';
-import { AddTaskAC, ChangeTaskStatusAC, RemoveTaskAC, RemoveTasksObjAC, taskReducer } from "./taskReducer";
+import {
+	AddTaskAC,
+	ChangeTaskStatusAC,
+	ChangeTaskTitleAC,
+	RemoveTaskAC,
+	RemoveTasksObjAC,
+	taskReducer
+} from "./taskReducer";
 
 
 describe('TaskReducer testing', () => {
+	const startState = {
+		'todolist1': [
+			{ id: '1', title: 'first task', isDone: false },
+			{ id: '2', title: 'second task', isDone: false },
+		],
+		'todolist2': [
+			{ id: '1', title: 'first task', isDone: false },
+			{ id: '2', title: 'second task', isDone: false },
+		],
+	};
 	it('should remove task from correct todolist', () => {
-		const startState = {
-			todolist1: [
-				{ id: '1', title: 'first task', isDone: false },
-				{ id: '2', title: 'second task', isDone: false },
-			],
-			todolist2: [
-				{ id: '1', title: 'first task', isDone: false },
-				{ id: '2', title: 'second task', isDone: false },
-			],
-		};
+
 		const endState = taskReducer(startState, RemoveTaskAC('todolist1', '1'));
 		
 		expect(endState.todolist1.length).toBe(1);
@@ -22,16 +30,6 @@ describe('TaskReducer testing', () => {
 	});
 	
 	it('should add task to correct todolist', () => {
-		const startState = {
-			todolist1: [
-				{ id: '1', title: 'first task', isDone: false },
-				{ id: '2', title: 'second task', isDone: false },
-			],
-			todolist2: [
-				{ id: '1', title: 'first task', isDone: false },
-				{ id: '2', title: 'second task', isDone: false },
-			],
-		};
 		
 		const endState = taskReducer(startState, AddTaskAC('todolist1', 'new task'));
 		
@@ -42,16 +40,6 @@ describe('TaskReducer testing', () => {
 	});
 	
 	it('should change task status', () => {
-		const startState = {
-			todolist1: [
-				{ id: '1', title: 'first task', isDone: false },
-				{ id: '2', title: 'second task', isDone: false },
-			],
-			todolist2: [
-				{ id: '1', title: 'first task', isDone: false },
-				{ id: '2', title: 'second task', isDone: false },
-			],
-		};
 		
 		const endState = taskReducer(startState, ChangeTaskStatusAC('todolist1', '1', true));
 		
@@ -60,20 +48,18 @@ describe('TaskReducer testing', () => {
 	});
 	
 	it('should remove tasks object', () => {
-		const startState = {
-			todolist1: [
-				{ id: '1', title: 'first task', isDone: false },
-				{ id: '2', title: 'second task', isDone: false },
-			],
-			todolist2: [
-				{ id: '1', title: 'first task', isDone: false },
-				{ id: '2', title: 'second task', isDone: false },
-			],
-		};
 		
 		const endState = taskReducer(startState, RemoveTasksObjAC('todolist1'));
 		
 		expect(endState.todolist1).toBeUndefined();
+		expect(endState.todolist2.length).toBe(2);
+	});
+	
+	it('should be correct changed title task', () => {
+		
+		const endState = taskReducer(startState, ChangeTaskTitleAC('todolist1', '1', 'new title'));
+		
+		expect(endState['todolist1'][0].title).toBe('new title')
 		expect(endState.todolist2.length).toBe(2);
 	});
 });
