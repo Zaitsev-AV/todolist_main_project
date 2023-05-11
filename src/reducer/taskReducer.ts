@@ -1,5 +1,3 @@
-import { v1 } from "uuid";
-import { FilterValueType } from "../App";
 import { AddNewTodolistAC, setTodoListAC } from "./todolistReducer";
 import { Dispatch } from "redux";
 import { taskAPI, TaskType } from "../component/api/api";

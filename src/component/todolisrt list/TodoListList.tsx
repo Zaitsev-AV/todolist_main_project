@@ -3,16 +3,18 @@ import { Todolist } from "../todolist/Todolist";
 import { useSelector } from "react-redux";
 import { AppRootStateType } from "../../reducer/store";
 import {
-	addNewTodoListTC, ChangedFilterAC,
+	addNewTodoListTC,
+	ChangedFilterAC,
 	changeTodoListTC,
 	removeTodoListTC,
 	setTodoListTC,
 	TodoListsAppType
 } from "../../reducer/todolistReducer";
-import { AddTaskAC, TaskStateType } from "../../reducer/taskReducer";
+import { TaskStateType } from "../../reducer/taskReducer";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { FilterValueType } from "../../App";
 import { UniversalInputField } from "../UniversalInput/UniversalInputField";
+import { TaskStatuses } from "../api/api";
 
 export type TodoListListPropsType = {};
 export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
@@ -62,8 +64,8 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 					todoLists.map( el => {
 						
 						let taskForTodolist = tasks[ el.id ]
-						el.filter === 'active' ? taskForTodolist = taskForTodolist.filter( el => !el.isDone )
-							: el.filter === 'completed' ? taskForTodolist = taskForTodolist.filter( el => el.isDone )
+						el.filter === 'active' ? taskForTodolist = taskForTodolist.filter( el => el.status === TaskStatuses.InProgress )
+							: el.filter === 'completed' ? taskForTodolist = taskForTodolist.filter( el => el.status === TaskStatuses.Completed )
 								: 'all' // logic for filter
 						
 						return (
