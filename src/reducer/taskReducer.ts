@@ -64,7 +64,7 @@ export const taskReducer = ( state: TaskStateType = initialState, action: Action
 		}
 		case "ADD-NEW-TODO-LIST": {
 			debugger
-			return { ...state, [ action.payload.todolistID ]: [] } // добавляем в стейт новый массив с ключом который является id нового тудулиста
+			return { ...state, [ action.payload.newTodoList.id ]: [] } // добавляем в стейт новый массив с ключом который является id нового тудулиста
 		}
 		case "REMOVE-TASKS-OBJ": {
 			delete state[ action.payload.todolistID ] // удаляем из стейта с тасками таски удаленного тудулиста
