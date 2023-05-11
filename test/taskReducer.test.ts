@@ -6,7 +6,7 @@ import {
 	RemoveTaskAC,
 	RemoveTasksObjAC,
 	taskReducer
-} from "./taskReducer";
+} from "../src/reducer/taskReducer";
 
 
 describe('TaskReducer testing', () => {

@@ -1,6 +1,7 @@
 .app {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 5%;
     margin-left: 5%;
     /*background-color: #88706B;*/

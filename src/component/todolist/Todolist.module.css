@@ -1,8 +1,12 @@
+.wrapper {
+    padding: 15px;
+}
+
 .card {
     display: flex;
     --background: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%);
-    width: 280px;
-    height: 332px;
+    /*width: 280px;*/
+    /*height: 332px;*/
     padding: 5px;
     border-radius: 1rem;
     overflow: visible;
@@ -24,11 +28,13 @@
     align-items: flex-start;
     margin-left: 7%;
     margin-top: 5%;
+    padding: 5px;
 }
 .btnFilter {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    padding: 15px;
 }
 /*.btnFilter button {*/
 /*    margin: 5px;*/

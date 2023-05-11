@@ -41,44 +41,46 @@ export const Todolist: React.FC<TodolistPropsType> = ( props ) => {
 	}
 	
 	return (
-		<div className={ s.card }>
-			<div className={ s.cardInfo }>
-				<h2 className={s.title}>
-					<EditableText callBack={(newTitle: string)=> newTodolistTitleHandler(newTitle)} title={title}/>
-					<button onClick={onClickRemoveTodolist}>-</button>
-				</h2>
-				<UniversalInputField callBack={ addTaskHandler }/>
-				<div className={s.tasks}>{ tasks.map( t => {
-					const onClickRemoveTask = () => {
-						removeTask( t.id, todolistID )
-					}
-					const onChangeInputStatus = (e: ChangeEvent<HTMLInputElement>) => {
-						onChangeTaskStatus(todolistID, t.id, e.currentTarget.checked)
-					}
-					return (
-						<div>
-							<EditableText key={ t.id }
-							              title={t.title}
-							              callBack={(newTitle: string)=> newTaskTitleHandler(t.id, newTitle)}
-							/>
-						<input type={ "checkbox" }
-						                                      checked={ t.isDone }
-						                                      onChange={ onChangeInputStatus }
-						/> <button onClick={ onClickRemoveTask }>-</button>
+		<div className={ s.wrapper }>
+			<div className={ s.card }>
+				<div className={ s.cardInfo }>
+					<h2 className={ s.title }>
+						<EditableText callBack={ ( newTitle: string ) => newTodolistTitleHandler( newTitle ) }
+						              title={ title }/>
+						<button onClick={ onClickRemoveTodolist }>-</button>
+					</h2>
+					<UniversalInputField callBack={ addTaskHandler }/>
+					<div className={ s.tasks }>{ tasks.map( t => {
+						const onClickRemoveTask = () => {
+							removeTask( t.id, todolistID )
+						}
+						const onChangeInputStatus = ( e: ChangeEvent<HTMLInputElement>) => {
+							onChangeTaskStatus(todolistID, t.id, e.currentTarget.checked)
+						}
+						return (
+							<div>
+								<EditableText key={ t.id }
+								              title={t.title}
+								              callBack={( newTitle: string)=> newTaskTitleHandler(t.id, newTitle)}
+								/>
+								<input type={ "checkbox" }
+								       checked={ t.isDone }
+								       onChange={ onChangeInputStatus }
+								/> <button onClick={ onClickRemoveTask }>-</button>
+							
+							</div>
 						
-						</div>
-					
-					)
-				} ) }</div>
-				<div className={s.btnFilter}>
-					<button onClick={ () => onclickBtnFilterHandler( 'all' ) }>All</button>
-					<button onClick={ () => onclickBtnFilterHandler( 'active' ) }>Active</button>
-					<button onClick={ () => onclickBtnFilterHandler( 'completed' ) }>Completed</button>
-				</div>
+						)
+					} ) }</div>
+					<div className={ s.btnFilter }>
+						<button onClick={ () => onclickBtnFilterHandler( 'all' ) }>All</button>
+						<button onClick={ () => onclickBtnFilterHandler( 'active' ) }>Active</button>
+						<button onClick={ () => onclickBtnFilterHandler( 'completed' ) }>Completed</button>
+					</div>
 				
+				</div>
 			</div>
 		</div>
-		
 		
 	);
 };
