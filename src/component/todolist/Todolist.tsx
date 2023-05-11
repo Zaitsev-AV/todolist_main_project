@@ -1,9 +1,11 @@
-import React, { ChangeEvent } from 'react';
-import { TaskType } from "../../reducer/taskReducer";
+import React, { ChangeEvent, useEffect } from 'react';
+import { setTaskTC } from "../../reducer/taskReducer";
 import { UniversalInputField } from "../UniversalInput/UniversalInputField";
 import s from './Todolist.module.css'
 import { FilterValueType } from "../../App";
 import { EditableText } from "../editableText/EditableText";
+import { TaskType } from "../api/api";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 export type TodolistPropsType = {
 	todolistID: string
@@ -23,6 +25,11 @@ export const Todolist: React.FC<TodolistPropsType> = ( props ) => {
 		onChangeTaskStatus, changedFilter,
 		removeTodolist, changedTaskText,
 		changedTodolistTitle} = props
+	
+	const dispatch = useAppDispatch()
+	useEffect(()=> {
+		dispatch(setTaskTC(todolistID))
+	}, [])
 	const addTaskHandler = ( title: string ) => addTask( todolistID, title )
 	
 	const onclickBtnFilterHandler = ( value: FilterValueType ) => {
@@ -64,7 +71,7 @@ export const Todolist: React.FC<TodolistPropsType> = ( props ) => {
 								              callBack={( newTitle: string)=> newTaskTitleHandler(t.id, newTitle)}
 								/>
 								<input type={ "checkbox" }
-								       checked={ t.isDone }
+								       // checked={ t.isDone }
 								       onChange={ onChangeInputStatus }
 								/> <button onClick={ onClickRemoveTask }>-</button>
 							

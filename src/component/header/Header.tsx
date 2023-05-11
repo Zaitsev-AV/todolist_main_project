@@ -8,7 +8,7 @@ export const Header: React.FC<HeaderPropsType> = ( props ) => {
 	const {  } = props
 	return (
 		<div className={s.wrapper}>
-		<h1>header</h1>
+		<h1>TickTask</h1>
 		</div>
 	);
 };
