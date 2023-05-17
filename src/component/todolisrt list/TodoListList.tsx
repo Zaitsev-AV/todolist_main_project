@@ -10,7 +10,7 @@ import {
 	setTodoListTC,
 	TodoListsAppType
 } from "../../reducer/todolistReducer";
-import { TaskStateType } from "../../reducer/taskReducer";
+import { addTaskTC, TaskStateType } from "../../reducer/taskReducer";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { FilterValueType } from "../../App";
 import { UniversalInputField } from "../UniversalInput/UniversalInputField";
@@ -31,7 +31,7 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 	}
 	
 	const addTask = ( todolistID: string, title: string ) => {
-		// dispatch(  )
+		dispatch( addTaskTC(todolistID, title) )
 	}
 	const onChangeTaskStatus = ( todolistID: string, taskID: string, newIsDone: boolean ) => {
 		// taskDispatch( ChangeTaskStatusAC( todolistID, taskID, newIsDone ) )

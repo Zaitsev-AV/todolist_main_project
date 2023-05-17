@@ -26,8 +26,11 @@ export const todoListAPI = {
 
 //task api
 export const taskAPI = {
-	setTask(todoListID: string) {
-		return instance.get<GetTaskResponse<TaskType[ ]>>(`todo-lists/${todoListID}/tasks`)
+	setTask( todoListID: string ) {
+		return instance.get<GetTaskResponse<TaskType[ ]>>( `todo-lists/${ todoListID }/tasks` )
+	},
+	addTask( todoListID: string, title: string ) {
+		return instance.post<ResponseType<{item: TaskType}>>( `todo-lists/${ todoListID }/tasks`, { title } )
 	}
 }
 

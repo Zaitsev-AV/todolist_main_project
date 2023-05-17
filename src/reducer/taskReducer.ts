@@ -36,13 +36,12 @@ export const taskReducer = ( state: TaskStateType = initialState, action: Action
 					state[ action.payload.todolistID ].filter( el => el.id !== action.payload.taskID )
 			}
 		}
-		// case 'ADD-TASK' : {
-		// 	return {
-		// 		...state, [ action.payload.todolistID ]:
-		// 			[ { id: v1(), title: action.payload.title, isDone: false },
-		// 				...state[ action.payload.todolistID ] ]
-		// 	}
-		// }
+		case 'ADD-TASK' : {
+			return {
+				...state, [ action.payload.todolistID ]: [action.payload.task ,...state[action.payload.todolistID]]
+				
+			}
+		}
 		case 'CHANGE-TASK-STATUS': {
 			return {
 				...state, [ action.payload.todolistID ]:
@@ -85,12 +84,12 @@ export const RemoveTaskAC = ( todolistID: string, taskID: string ) => {
 	} as const
 }
 
-export const AddTaskAC = ( todolistID: string, title: string ) => {
+export const AddTaskAC = ( todolistID: string, task: TaskType ) => {
 	return {
 		type: 'ADD-TASK',
 		payload: {
 			todolistID,
-			title
+			task
 		}
 	} as const
 }
@@ -132,8 +131,26 @@ export const setTasksAC = ( todoListID: string, tasks: TaskType[] ) => {
 	} as const
 }
 // thunks creators
-export const setTaskTC = ( todoListID: string ) => ( dispatch: Dispatch ) => {
-	taskAPI.setTask( todoListID )
-		.then( res => dispatch( setTasksAC( todoListID, res.data.items ) ) )
+export const setTaskTC = ( todoListID: string ) => async ( dispatch: Dispatch ) => {
+	try {
+		const res = await taskAPI.setTask( todoListID )
+		dispatch( setTasksAC( todoListID, res.data.items ) )
+	} catch ( e ) {
+		    console.warn(e)
+	}
+}
+
+export const addTaskTC = ( todoListID: string, title: string ) => async ( dispatch: Dispatch ) => {
+	try {
+		const res = await taskAPI.addTask( todoListID , title)
+		if ( res.data.resultCode === 0 ) {
+			dispatch( AddTaskAC( todoListID, res.data.data.item ) )
+		} else {
+			//показать ошибку
+		}
+	} catch ( e ) {
+		console.warn(e)
+			// это для обработки ошибок не связанных с сервером, т.к сервак возвращает код 200 если запрос прошел
+	}
 }
 

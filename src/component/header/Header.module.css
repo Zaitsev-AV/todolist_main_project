@@ -4,7 +4,8 @@
     justify-content: center;
     height: 100px;
     background-color: #3b3a3a;
-    border: 1px solid #1BFD9C;
+    border-radius: 5px;
+    /*border: 1px solid #1BFD9C;*/
 }
 .wrapper h1 {
     font-size: 52px;
