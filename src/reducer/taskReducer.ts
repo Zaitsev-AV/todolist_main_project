@@ -1,4 +1,4 @@
-import { AddNewTodolistAC, setTodoListAC } from "./todolistReducer";
+import { addNewTodolistAC, setTodoListAC } from "./todolistReducer";
 import { Dispatch } from "redux";
 import { taskAPI, TaskPriorities, TaskStatuses, TaskType, TaskUpdate } from "../component/api/api";
 import { AppRootStateType } from "./store";
@@ -45,8 +45,8 @@ export const taskReducer = ( state: TaskStateType = initialState, action: Action
 		}
 		case "REMOVE-TASKS-OBJ": {
 			delete state[ action.payload.todolistID ] // удаляем из стейта с тасками таски удаленного тудулиста
+			break
 		}
-		
 	}
 	return state
 }
@@ -79,7 +79,7 @@ export const removeTasksObjAC = ( todolistID: string ) => {
 	} as const
 }
 
-export const updateTaskAC = ( todolistID: string, taskID: string, newTask: UpdateTaskModelType ) => {
+export const upDateTaskAC = ( todolistID: string, taskID: string, newTask: UpdateTaskModelType ) => {
 	return {
 		type: 'UPDATE-TASK',
 		payload: {
@@ -152,7 +152,7 @@ export const upDateTaskTC = ( todolistID: string, taskID: string, newTask: Updat
 	try {
 		const res = await taskAPI.updateTask( todolistID, taskID, taskUpDateModel )
 		if ( res.data.resultCode === 0 ) {
-			dispatch( updateTaskAC( todolistID, taskID, taskUpDateModel ) )
+			dispatch( upDateTaskAC( todolistID, taskID, taskUpDateModel ) )
 		}
 	} catch ( e ) {
 		console.warn(e)
@@ -174,10 +174,10 @@ type ActionType =
 	| ReturnType<typeof removeTaskAC>
 	| ReturnType<typeof addTaskAC>
 	| ReturnType<typeof removeTasksObjAC>
-	| ReturnType<typeof AddNewTodolistAC>
+	| ReturnType<typeof addNewTodolistAC>
 	| ReturnType<typeof setTodoListAC>
 	| ReturnType<typeof setTasksAC>
-	| ReturnType<typeof updateTaskAC>
+	| ReturnType<typeof upDateTaskAC>
 
 export type TaskStateType = {
 	[ key: string ]: TaskType[]

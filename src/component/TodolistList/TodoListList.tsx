@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { AppRootStateType } from "../../reducer/store";
 import {
 	addNewTodoListTC,
-	ChangedFilterAC,
+	changedFilterAC,
 	changeTodoListTC,
 	removeTodoListTC,
 	setTodoListTC,
@@ -37,7 +37,7 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 		dispatch(upDateTaskTC(todolistID, taskID, {status}))
 	}
 	const changedFilter = ( todolistID: string, newFilter: FilterValueType ) => {
-		dispatch( ChangedFilterAC( todolistID, newFilter ) )
+		dispatch( changedFilterAC( todolistID, newFilter ) )
 	}
 	const removeTodolist = ( todolistID: string ) => {
 		dispatch(removeTodoListTC(todolistID))

@@ -1,12 +1,10 @@
 import { describe, it } from 'vitest';
 import {
 	addTaskAC,
-	ChangeTaskStatusAC,
-	ChangeTaskTitleAC,
 	removeTaskAC,
 	removeTasksObjAC,
 	taskReducer,
-	TaskStateType
+	TaskStateType, upDateTaskAC
 } from "../src/reducer/taskReducer";
 import { TaskPriorities, TaskStatuses, TaskType } from "../src/component/api/api";
 
@@ -95,7 +93,8 @@ describe('TaskReducer testing', () => {
 	
 	it('should change task status', () => {
 		
-		const endState = taskReducer(startState, ChangeTaskStatusAC('todolist1', '1', true));
+		const status = TaskStatuses.Draft
+		const endState = taskReducer(startState, upDateTaskAC('todolist1', '1', {status}));
 		
 		// expect(endState.todolist1[0].isDone).toBeTruthy();
 		// expect(endState.todolist2[0].isDone).toBeFalsy();
@@ -110,10 +109,11 @@ describe('TaskReducer testing', () => {
 	});
 	
 	it('should be correct changed title task', () => {
+		const title = 'new task title'
 		
-		const endState = taskReducer(startState, ChangeTaskTitleAC('todolist1', '1', 'new title'));
+		const endState = taskReducer(startState, upDateTaskAC('todolist1', '1', {title}));
 		
-		expect(endState['todolist1'][0].title).toBe('new title')
+		expect(endState['todolist1'][0].title).toBe('new task title')
 		expect(endState.todolist2.length).toBe(2);
 	});
 });
