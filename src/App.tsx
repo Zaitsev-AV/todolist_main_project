@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css'
-import { Header } from "./component/header/Header";
-import { TodoListList } from "./component/todolist list/TodoListList";
+import { Header } from "./component/Header/Header";
+import { TodoListList } from "./component/TodolistList/TodoListList";
 import { Preloader } from "./component/common/Preloader/Preloader";
 import { LinePreloader } from "./component/common/LinePreloader/LinePreloader";
 

@@ -1,27 +1,15 @@
 import { AddNewTodolistAC, setTodoListAC } from "./todolistReducer";
 import { Dispatch } from "redux";
-import { taskAPI, TaskType } from "../component/api/api";
+import { taskAPI, TaskPriorities, TaskStatuses, TaskType, TaskUpdate } from "../component/api/api";
+import { AppRootStateType } from "./store";
 
-export type TaskStateType = {
-	[ key: string ]: TaskType[]
-}
+
 const initialState: TaskStateType = {}
-
-type ActionType =
-	| ReturnType<typeof RemoveTaskAC>
-	| ReturnType<typeof AddTaskAC>
-	| ReturnType<typeof ChangeTaskStatusAC>
-	| ReturnType<typeof RemoveTasksObjAC>
-	| ReturnType<typeof AddNewTodolistAC>
-	| ReturnType<typeof ChangeTaskTitleAC>
-	| ReturnType<typeof setTodoListAC>
-	| ReturnType<typeof setTasksAC>
-
 
 export const taskReducer = ( state: TaskStateType = initialState, action: ActionType ): TaskStateType => {
 	switch ( action.type ) {
 		case "SET-TODOLIST": {
-			const copy = {...state}
+			const copy = { ...state }
 			action.payload.todoLists.forEach( el => copy[ el.id ] = [] )
 			return copy
 		}
@@ -42,26 +30,16 @@ export const taskReducer = ( state: TaskStateType = initialState, action: Action
 				
 			}
 		}
-		case 'CHANGE-TASK-STATUS': {
+		case "UPDATE-TASK":
 			return {
-				...state, [ action.payload.todolistID ]:
-					state[ action.payload.todolistID ].map( el => el.id === action.payload.taskID
+				...state, [ action.payload.todolistID ]: state[ action.payload.todolistID ]
+					.map( el => el.id === action.payload.taskID
 						?
-						{ ...el, isDone: action.payload.newIsDone }
+						{...el,...action.payload.newTask}
 						:
-						el )
+						el
+					)
 			}
-		}
-		case "CHANGE-TASK-TITLE": {
-			return {
-				...state, [ action.payload.todolistID ]:
-					state[ action.payload.todolistID ].map( el => el.id === action.payload.taskID
-						?
-						{ ...el, title: action.payload.newTitle }
-						:
-						el )
-			}
-		}
 		case "ADD-NEW-TODO-LIST": {
 			return { ...state, [ action.payload.newTodoList.id ]: [] } // добавляем в стейт новый массив с ключом который является id нового тудулиста
 		}
@@ -73,7 +51,7 @@ export const taskReducer = ( state: TaskStateType = initialState, action: Action
 	return state
 }
 //action creators
-export const RemoveTaskAC = ( todolistID: string, taskID: string ) => {
+export const removeTaskAC = ( todolistID: string, taskID: string ) => {
 	return {
 		type: "REMOVE-TASK",
 		payload: {
@@ -83,7 +61,7 @@ export const RemoveTaskAC = ( todolistID: string, taskID: string ) => {
 	} as const
 }
 
-export const AddTaskAC = ( todolistID: string, task: TaskType ) => {
+export const addTaskAC = ( todolistID: string, task: TaskType ) => {
 	return {
 		type: 'ADD-TASK',
 		payload: {
@@ -92,18 +70,7 @@ export const AddTaskAC = ( todolistID: string, task: TaskType ) => {
 		}
 	} as const
 }
-
-export const ChangeTaskStatusAC = ( todolistID: string, taskID: string, newIsDone: boolean ) => {
-	return {
-		type: 'CHANGE-TASK-STATUS',
-		payload: {
-			todolistID,
-			taskID,
-			newIsDone
-		}
-	} as const
-}
-export const RemoveTasksObjAC = ( todolistID: string ) => {
+export const removeTasksObjAC = ( todolistID: string ) => {
 	return {
 		type: 'REMOVE-TASKS-OBJ',
 		payload: {
@@ -112,13 +79,13 @@ export const RemoveTasksObjAC = ( todolistID: string ) => {
 	} as const
 }
 
-export const ChangeTaskTitleAC = ( todolistID: string, taskID: string, newTitle: string ) => {
+export const updateTaskAC = ( todolistID: string, taskID: string, newTask: UpdateTaskModelType ) => {
 	return {
-		type: 'CHANGE-TASK-TITLE',
+		type: 'UPDATE-TASK',
 		payload: {
 			todolistID,
 			taskID,
-			newTitle
+			newTask
 		}
 	} as const
 }
@@ -129,6 +96,7 @@ export const setTasksAC = ( todoListID: string, tasks: TaskType[] ) => {
 		payload: { todoListID, tasks }
 	} as const
 }
+
 // thunks creators
 export const setTaskTC = ( todoListID: string ) => async ( dispatch: Dispatch ) => {
 	try {
@@ -143,28 +111,74 @@ export const addTaskTC = ( todoListID: string, title: string ) => async ( dispat
 	try {
 		const res = await taskAPI.addTask( todoListID , title)
 		if ( res.data.resultCode === 0 ) {
-			dispatch( AddTaskAC( todoListID, res.data.data.item ) )
+			dispatch( addTaskAC( todoListID, res.data.data.item ) )
 		} else {
 			//показать ошибку
 		}
 	} catch ( e ) {
-		console.warn(e)
-			// это для обработки ошибок не связанных с сервером, т.к сервак возвращает код 200 если запрос прошел
+		console.warn( e )
+		// это для обработки ошибок не связанных с сервером, т.к сервак возвращает код 200 если запрос прошел
 	}
 }
 
-export const removeTaskTC = (todolistID:string, taskID: string) => async (dispatch: Dispatch) => {
+export const removeTaskTC = ( todolistID: string, taskID: string ) => async ( dispatch: Dispatch ) => {
 	try {
-		const res = await taskAPI.removeTask(todolistID, taskID)
-		// @ts-ignore
-		    console.log(res)
-		// if ( res.data.resultCode === 1 ) {
-		// 	dispatch(RemoveTaskAC(todolistID, taskID))
-		// } else {
-		// 	    console.log(res.data.data.messages)
-		// }
+		const res = await taskAPI.removeTask( todolistID, taskID )
+		dispatch( removeTaskAC( todolistID, taskID ) )
 	} catch ( e ) {
-	
+		console.log( e )
 	}
 }
 
+export const upDateTaskTC = ( todolistID: string, taskID: string, newTask: UpdateTaskModelType ) => async ( dispatch: Dispatch, getState: () => AppRootStateType ) => {
+	const task = getState().tasks[ todolistID ].find( el => el.id === taskID )
+	
+	if ( !task ) {
+		console.warn( 'task not found in the state' )
+		return
+	}
+	//на сервер на нужно в запросе отправлять объект такого типа, поэтому чтобы не собирать все поля по приложению,
+	// мы берем их актуальные значения из текущего состояния
+	const taskUpDateModel: TaskUpdate = {
+		title: task.title,
+		description: task.description,
+		completed: task.completed,
+		status: task.status,
+		priority: task.priority,
+		startDate: task.startDate,
+		deadline: task.deadline,
+		...newTask // здесь мы затираем в объекте который отправим на сервер поля которые изменились.
+	}
+	try {
+		const res = await taskAPI.updateTask( todolistID, taskID, taskUpDateModel )
+		if ( res.data.resultCode === 0 ) {
+			dispatch( updateTaskAC( todolistID, taskID, taskUpDateModel ) )
+		}
+	} catch ( e ) {
+		console.warn(e)
+	}
+	
+}
+
+// types
+export type UpdateTaskModelType = { // этот тип нужен, чтобы собирать данные в приложении, только те данные которые нам нужны.
+	title?: string
+	description?: string
+	status?: TaskStatuses
+	priority?: TaskPriorities
+	startDate?: Date
+	deadline?: Date
+}
+
+type ActionType =
+	| ReturnType<typeof removeTaskAC>
+	| ReturnType<typeof addTaskAC>
+	| ReturnType<typeof removeTasksObjAC>
+	| ReturnType<typeof AddNewTodolistAC>
+	| ReturnType<typeof setTodoListAC>
+	| ReturnType<typeof setTasksAC>
+	| ReturnType<typeof updateTaskAC>
+
+export type TaskStateType = {
+	[ key: string ]: TaskType[]
+}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Todolist } from "./todolist/Todolist";
+import { Todolist } from "./Todolist/Todolist";
 import { useSelector } from "react-redux";
 import { AppRootStateType } from "../../reducer/store";
 import {
@@ -10,7 +10,7 @@ import {
 	setTodoListTC,
 	TodoListsAppType
 } from "../../reducer/todolistReducer";
-import { addTaskTC, removeTaskTC, TaskStateType } from "../../reducer/taskReducer";
+import { addTaskTC, removeTaskTC, TaskStateType, upDateTaskTC } from "../../reducer/taskReducer";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { FilterValueType } from "../../App";
 import { UniversalInputField } from "../UniversalInput/UniversalInputField";
@@ -28,14 +28,13 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 	
 	const removeTask = ( taskID: string, todolistID: string ) => {
 		dispatch(removeTaskTC(todolistID, taskID))
-		// taskDispatch( RemoveTaskAC( todolistID, taskID ) )
 	}
 	
 	const addTask = ( todolistID: string, title: string ) => {
 		dispatch( addTaskTC(todolistID, title) )
 	}
-	const onChangeTaskStatus = ( todolistID: string, taskID: string, newIsDone: boolean ) => {
-		// taskDispatch( ChangeTaskStatusAC( todolistID, taskID, newIsDone ) )
+	const onChangeTaskStatus = ( todolistID: string, taskID: string, status: TaskStatuses ) => {
+		dispatch(upDateTaskTC(todolistID, taskID, {status}))
 	}
 	const changedFilter = ( todolistID: string, newFilter: FilterValueType ) => {
 		dispatch( ChangedFilterAC( todolistID, newFilter ) )
@@ -46,8 +45,8 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 	const addNewTodolist = ( newTodolistTitle: string ) => {
 		dispatch( addNewTodoListTC( newTodolistTitle ) )
 	}
-	const changedTaskText = ( todolistId: string, taskID: string, newTitle: string ) => {
-		// taskDispatch( ChangeTaskTitleAC( todolistId, taskID, newTitle ) )
+	const changedTaskText = ( todolistID: string, taskID: string, newTitle: string ) => {
+		dispatch(upDateTaskTC(todolistID, taskID, {title: newTitle}))
 	}
 	const changedTodolistTitle = ( todoListID: string, newTitle: string ) => {
 		dispatch(changeTodoListTC(todoListID, newTitle))
@@ -60,7 +59,6 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 			<div className={ 'app' }>
 				
 				{
-					
 					todoLists.map( el => {
 						
 						let taskForTodolist = tasks[ el.id ]

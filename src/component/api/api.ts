@@ -34,10 +34,23 @@ export const taskAPI = {
 	},
 	removeTask(todolistID: string, taskID: string) {
 		return instance.delete<AxiosResponse<ResponseType>>(`/todo-lists/${todolistID}/tasks/${taskID}`)
+	},
+	updateTask(todolistID: string, taskID: string,task: TaskUpdate ) {
+		return instance.put<ResponseType<{item: TaskType}>, AxiosResponse<ResponseType<{item: TaskType}>>,TaskUpdate >(`/todo-lists/${todolistID}/tasks/${taskID}`, task)
 	}
 }
 
 //types
+
+export interface TaskUpdate {
+	title: string
+	description: string
+	completed: boolean
+	status: TaskStatuses
+	priority: TaskPriorities
+	startDate: Date
+	deadline: Date
+}
 
 type ResponseType<T = {}> = {
 	resultCode: number
