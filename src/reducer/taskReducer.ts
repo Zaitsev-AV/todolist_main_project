@@ -63,7 +63,6 @@ export const taskReducer = ( state: TaskStateType = initialState, action: Action
 			}
 		}
 		case "ADD-NEW-TODO-LIST": {
-			debugger
 			return { ...state, [ action.payload.newTodoList.id ]: [] } // добавляем в стейт новый массив с ключом который является id нового тудулиста
 		}
 		case "REMOVE-TASKS-OBJ": {
@@ -151,6 +150,21 @@ export const addTaskTC = ( todoListID: string, title: string ) => async ( dispat
 	} catch ( e ) {
 		console.warn(e)
 			// это для обработки ошибок не связанных с сервером, т.к сервак возвращает код 200 если запрос прошел
+	}
+}
+
+export const removeTaskTC = (todolistID:string, taskID: string) => async (dispatch: Dispatch) => {
+	try {
+		const res = await taskAPI.removeTask(todolistID, taskID)
+		// @ts-ignore
+		    console.log(res)
+		// if ( res.data.resultCode === 1 ) {
+		// 	dispatch(RemoveTaskAC(todolistID, taskID))
+		// } else {
+		// 	    console.log(res.data.data.messages)
+		// }
+	} catch ( e ) {
+	
 	}
 }
 

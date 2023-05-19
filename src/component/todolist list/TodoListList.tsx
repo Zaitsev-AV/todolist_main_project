@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Todolist } from "../todolist/Todolist";
+import { Todolist } from "./todolist/Todolist";
 import { useSelector } from "react-redux";
 import { AppRootStateType } from "../../reducer/store";
 import {
@@ -10,7 +10,7 @@ import {
 	setTodoListTC,
 	TodoListsAppType
 } from "../../reducer/todolistReducer";
-import { addTaskTC, TaskStateType } from "../../reducer/taskReducer";
+import { addTaskTC, removeTaskTC, TaskStateType } from "../../reducer/taskReducer";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { FilterValueType } from "../../App";
 import { UniversalInputField } from "../UniversalInput/UniversalInputField";
@@ -27,6 +27,7 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 	}, [] )
 	
 	const removeTask = ( taskID: string, todolistID: string ) => {
+		dispatch(removeTaskTC(todolistID, taskID))
 		// taskDispatch( RemoveTaskAC( todolistID, taskID ) )
 	}
 	
@@ -51,7 +52,6 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 	const changedTodolistTitle = ( todoListID: string, newTitle: string ) => {
 		dispatch(changeTodoListTC(todoListID, newTitle))
 	}
-	debugger
 	return (
 		<div>
 			<div>

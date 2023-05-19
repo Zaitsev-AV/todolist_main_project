@@ -1,11 +1,12 @@
 import React, { ChangeEvent, useEffect } from 'react';
-import { setTaskTC } from "../../reducer/taskReducer";
-import { UniversalInputField } from "../UniversalInput/UniversalInputField";
+import { setTaskTC } from "../../../reducer/taskReducer";
+import { UniversalInputField } from "../../UniversalInput/UniversalInputField";
 import s from './Todolist.module.css'
-import { FilterValueType } from "../../App";
-import { EditableText } from "../editableText/EditableText";
-import { TaskType } from "../api/api";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { FilterValueType } from "../../../App";
+import { EditableText } from "../../editableText/EditableText";
+import { TaskType } from "../../api/api";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { Task } from "./Task/Task";
 
 export type TodolistPropsType = {
 	todolistID: string
@@ -15,7 +16,7 @@ export type TodolistPropsType = {
 	addTask: ( todolistID: string, title: string ) => void
 	onChangeTaskStatus: ( todolistID: string, taskID: string, newIsDone: boolean ) => void
 	changedFilter: ( todolistID: string, newFilter: FilterValueType ) => void
-	removeTodolist: (todolistID: string) => void
+	removeTodolist: ( todolistID: string ) => void
 	changedTaskText:(todolistId: string, taskID: string, newTitle: string) => void
 	changedTodolistTitle:( todolistID: string, newTitle: string )=> void
 };
@@ -58,25 +59,32 @@ export const Todolist: React.FC<TodolistPropsType> = ( props ) => {
 					</h2>
 					<UniversalInputField callBack={ addTaskHandler }/>
 					<div className={ s.tasks }>{ tasks.map( t => {
-						const onClickRemoveTask = () => {
-							removeTask( t.id, todolistID )
-						}
-						const onChangeInputStatus = ( e: ChangeEvent<HTMLInputElement>) => {
-							onChangeTaskStatus(todolistID, t.id, e.currentTarget.checked)
-						}
-						return (
-							<div>
-								<EditableText key={ t.id }
-								              title={t.title}
-								              callBack={( newTitle: string)=> newTaskTitleHandler(t.id, newTitle)}
-								/>
-								<input type={ "checkbox" }
-								       // checked={ t.isDone }
-								       onChange={ onChangeInputStatus }
-								/> <button onClick={ onClickRemoveTask }>-</button>
-							
-							</div>
 						
+						// const onClickRemoveTask = () => {
+						// 	removeTask( t.id, todolistID )
+						// }
+						// const onChangeInputStatus = ( e: ChangeEvent<HTMLInputElement>) => {
+						// 	onChangeTaskStatus(todolistID, t.id, e.currentTarget.checked)
+						// }
+						return (
+							<Task
+								key={t.id}
+								title={ t.title }
+								todolistID={ todolistID }
+								taskID={ t.id }
+								removeTask={ removeTask }
+								newTaskTitleHandler={ newTaskTitleHandler }
+								onChangeTaskStatus={ onChangeTaskStatus }/>
+							// <div>
+							// 	<EditableText key={ t.id }
+							// 	              title={t.title}
+							// 	              callBack={( newTitle: string)=> newTaskTitleHandler(t.id, newTitle)}
+							// 	/>
+							// 	<input type={ "checkbox" }
+							// 	       // checked={ t.isDone }
+							// 	       onChange={ onChangeInputStatus }
+							// 	/> <button onClick={ onClickRemoveTask }>-</button>
+							// </div>
 						)
 					} ) }</div>
 					<div className={ s.btnFilter }>
