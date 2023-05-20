@@ -1,6 +1,7 @@
 import { FilterValueType } from "../App";
 import { Dispatch } from "redux";
 import { todoListAPI, TodoListType } from "../component/api/api";
+import { setAppStatusAC } from "./appReducer";
 
 const initialState: TodoListsAppType[] = []
 
@@ -81,13 +82,20 @@ export const setTodoListAC = ( todoLists: TodoListType[] ) => {
 }
 
 //thunks
-export const setTodoListTC = () => ( dispatch: Dispatch ) => {
-	todoListAPI.getTodoLists()
-		.then( ( res ) => dispatch(setTodoListAC( res.data ) ))
+export const setTodoListTC = () => async ( dispatch: Dispatch ) => {
+	dispatch(setAppStatusAC('loading'))
+	try {
+		const res = await todoListAPI.getTodoLists()
+		dispatch( setTodoListAC( res.data ) )
+		dispatch(setAppStatusAC('succeeded'))
+	} catch ( e ) {
+		console.log( e )
+		dispatch(setAppStatusAC('failed'))
+	}
 }
-export const addNewTodoListTC = (todoListTitle: string) => ( dispatch: Dispatch ) => {
-	todoListAPI.createTodoList(todoListTitle)
-		.then( ( res ) => dispatch(addNewTodolistAC( res.data.data.item ) ))
+export const addNewTodoListTC = ( todoListTitle: string ) => ( dispatch: Dispatch ) => {
+	todoListAPI.createTodoList( todoListTitle )
+		.then( ( res ) => dispatch( addNewTodolistAC( res.data.data.item ) ) )
 }
 
 export const removeTodoListTC = (todoListID: string) => ( dispatch: Dispatch ) => {

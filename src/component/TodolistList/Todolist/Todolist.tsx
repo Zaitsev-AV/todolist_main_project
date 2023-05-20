@@ -57,7 +57,7 @@ export const Todolist: React.FC<TodolistPropsType> = ( props ) => {
 						              title={ title }/>
 						<button onClick={ onClickRemoveTodolist }>-</button>
 					</h2>
-					<UniversalInputField callBack={ addTaskHandler }/>
+					<UniversalInputField callBack={ addTaskHandler } type={'task'}/>
 					<div className={ s.tasks }>{ tasks.map( t => {
 						return (
 							<Task

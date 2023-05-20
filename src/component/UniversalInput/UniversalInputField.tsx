@@ -2,9 +2,10 @@ import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import s from './UniversalInputField.module.css'
 
 export type UniversalInputFieldTypeProps = {
-callBack: (title: string)=> void
+	callBack: ( title: string ) => void
+	type: 'todo' | 'task'
 };
-export const UniversalInputField: React.FC<UniversalInputFieldTypeProps> = ( { callBack } ) => {
+export const UniversalInputField: React.FC<UniversalInputFieldTypeProps> = ( { callBack, type } ) => {
 	
 	const [title, setTitle] = useState('')
 	const [error, setError] = useState<string | null>(null)
@@ -30,16 +31,34 @@ export const UniversalInputField: React.FC<UniversalInputFieldTypeProps> = ( { c
 	}
 	return (
 		<div className={s.wrapper}>
-			<div className={s.textInputWrapper}>
-				<input value={title}
-				       onChange={onChangeInputHandler}
-				       onKeyDown={onKeyDownHandler}
-				       placeholder={"Type Here"}
-				       className={s.textInput}
-				/>
-				{<span style={{color: 'red'}}>{error}</span>}
-			</div>
-			<button className={s.btnInput} onClick={onClickButtonHandler}>+</button>
+			{type === 'task'
+				?
+				<>
+					<div className={s.textInputWrapper}>
+						<input value={title}
+						       onChange={onChangeInputHandler}
+						       onKeyDown={onKeyDownHandler}
+						       placeholder={"Type Here"}
+						       className={s.textInput}
+						/>
+						{<span style={{color: 'red'}}>{error}</span>}
+					</div>
+					<button className={s.btnInput} onClick={onClickButtonHandler}>+</button>
+				</>
+				:
+				<>
+					<div className={s.inputGroup}>
+						<input placeholder="Enter new todo list title here"
+						       type="text"
+						       value={title}
+						       onChange={onChangeInputHandler}
+						       onKeyDown={onKeyDownHandler}
+						       className={s.inputField}/>
+						<button className={ s.submitButton } onClick={onClickButtonHandler}><span>ADD</span></button>
+					</div>
+				</>
+			}
+			
 		</div>
 	);
 };

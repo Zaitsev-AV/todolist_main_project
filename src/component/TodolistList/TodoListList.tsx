@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { Todolist } from "./Todolist/Todolist";
-import { useSelector } from "react-redux";
-import { AppRootStateType } from "../../reducer/store";
 import {
 	addNewTodoListTC,
 	changedFilterAC,
@@ -15,19 +13,23 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { FilterValueType } from "../../App";
 import { UniversalInputField } from "../UniversalInput/UniversalInputField";
 import { TaskStatuses } from "../api/api";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { RequestStatusType } from "../../reducer/appReducer";
+import { Preloader } from "../common/Preloader/Preloader";
 
 export type TodoListListPropsType = {};
 export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 	const {} = props
-	const todoLists = useSelector<AppRootStateType, TodoListsAppType[]>( state => state.todoLists )
-	const tasks = useSelector<AppRootStateType, TaskStateType>( state => state.tasks )
+	const todoLists = useAppSelector<TodoListsAppType[]>( state => state.todoLists )
+	const tasks = useAppSelector<TaskStateType>( state => state.tasks )
+	const status = useAppSelector<RequestStatusType>( state => state.app.status )
 	const dispatch = useAppDispatch()
 	useEffect( () => {
 		dispatch( setTodoListTC() )
 	}, [] )
 	
 	const removeTask = ( taskID: string, todolistID: string ) => {
-		dispatch(removeTaskTC(todolistID, taskID))
+		dispatch( removeTaskTC( todolistID, taskID ) )
 	}
 	
 	const addTask = ( todolistID: string, title: string ) => {
@@ -52,36 +54,42 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 		dispatch(changeTodoListTC(todoListID, newTitle))
 	}
 	return (
+		
 		<div>
 			<div>
-				<UniversalInputField callBack={ addNewTodolist }/>
+				<UniversalInputField callBack={ addNewTodolist } type={'todo'}/>
 			</div>
 			<div className={ 'app' }>
-				
-				{
-					todoLists.map( el => {
-						
-						let taskForTodolist = tasks[ el.id ]
-						el.filter === 'active' ? taskForTodolist = taskForTodolist.filter( el => el.status === TaskStatuses.InProgress )
-							: el.filter === 'completed' ? taskForTodolist = taskForTodolist.filter( el => el.status === TaskStatuses.Completed )
-								: 'all' // logic for filter
-						
-						return (
-							<Todolist
-								key={ el.id }
-								todolistID={ el.id }
-								title={ el.title }
-								tasks={ taskForTodolist }
-								removeTask={ removeTask }
-								addTask={ addTask }
-								onChangeTaskStatus={ onChangeTaskStatus }
-								changedFilter={ changedFilter }
-								removeTodolist={ removeTodolist }
-								changedTaskText={ changedTaskText }
-								changedTodolistTitle={ changedTodolistTitle }
-							/>
-						)
-					} )
+				{ status === 'loading' ?( <Preloader/>) :
+					<>
+					{
+						todoLists.map( el => {
+							
+							let taskForTodolist = tasks[ el.id ]
+							el.filter === 'active' ? taskForTodolist = taskForTodolist.filter(
+									el => el.status === TaskStatuses.InProgress )
+								: el.filter === 'completed' ? taskForTodolist = taskForTodolist.filter(
+										el => el.status === TaskStatuses.Completed )
+									: 'all' // logic for filter
+							
+							return (
+								<Todolist
+									key={ el.id }
+									todolistID={ el.id }
+									title={ el.title }
+									tasks={ taskForTodolist }
+									removeTask={ removeTask }
+									addTask={ addTask }
+									onChangeTaskStatus={ onChangeTaskStatus }
+									changedFilter={ changedFilter }
+									removeTodolist={ removeTodolist }
+									changedTaskText={ changedTaskText }
+									changedTodolistTitle={ changedTodolistTitle }
+								/>
+							)
+						} )
+					}
+					</>
 				}
 			</div>
 		</div>
