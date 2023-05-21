@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { setTaskTC } from "../../../reducer/taskReducer";
-import { UniversalInputField } from "../../UniversalInput/UniversalInputField";
+import { UniversalInputField } from "../../common/UniversalInput/UniversalInputField";
 import s from './Todolist.module.css'
 import { FilterValueType } from "../../../App";
 import { EditableText } from "../../EditableText/EditableText";
 import { TaskStatuses, TaskType } from "../../api/api";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { Task } from "./Task/Task";
+import { DeleteBtn } from "../../common/DeleteButton/DeleteBtn";
 
 export type TodolistPropsType = {
 	todolistID: string
@@ -55,7 +56,7 @@ export const Todolist: React.FC<TodolistPropsType> = ( props ) => {
 					<h2 className={ s.title }>
 						<EditableText callBack={ ( newTitle: string ) => newTodolistTitleHandler( newTitle ) }
 						              title={ title }/>
-						<button onClick={ onClickRemoveTodolist }>-</button>
+						<DeleteBtn callback={onClickRemoveTodolist}/>
 					</h2>
 					<UniversalInputField callBack={ addTaskHandler } type={'task'}/>
 					<div className={ s.tasks }>{ tasks.map( t => {

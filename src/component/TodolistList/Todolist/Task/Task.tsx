@@ -1,6 +1,9 @@
 import React, { ChangeEvent } from 'react';
 import { EditableText } from "../../../EditableText/EditableText";
 import { TaskStatuses } from "../../../api/api";
+import { DeleteBtn } from "../../../common/DeleteButton/DeleteBtn";
+import s from './Task.module.css'
+import { CustomCheckbox } from "../../../common/CustomCheckbox/CustomCheckbox";
 
 export type TaskPropsType = {
 	title: string
@@ -20,15 +23,21 @@ export const Task: React.FC<TaskPropsType> = ( props ) => {
 		onChangeTaskStatus(todolistID, taskID, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.InProgress )
 	}
 	return (
-		<div>
-			<EditableText key={ taskID }
-			              title={title}
-			              callBack={( newTitle: string)=> newTaskTitleHandler(taskID, newTitle)}
-			/>
-			<input type={ "checkbox" }
-				checked={ status === TaskStatuses.Completed }
-				   onChange={ onChangeInputStatus }
-			/> <button onClick={ onClickRemoveTask }>-</button>
+		<div className={s.taskWrapper}>
+			<div>
+				{/*<input type={ "checkbox" }*/}
+				{/*       checked={ status === TaskStatuses.Completed }*/}
+				{/*       onChange={ onChangeInputStatus }*/}
+				{/*/>*/}
+				<CustomCheckbox status={status} callback={onChangeInputStatus}/>
+				<EditableText key={ taskID }
+				              title={title}
+				              callBack={( newTitle: string)=> newTaskTitleHandler(taskID, newTitle)}
+				/>
+			</div>
+
+			<DeleteBtn callback={onClickRemoveTask}/>
+			{/*<button onClick={ onClickRemoveTask }>-</button>*/}
 		</div>
 	);
 };

@@ -11,7 +11,7 @@ import {
 import { addTaskTC, removeTaskTC, TaskStateType, upDateTaskTC } from "../../reducer/taskReducer";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { FilterValueType } from "../../App";
-import { UniversalInputField } from "../UniversalInput/UniversalInputField";
+import { UniversalInputField } from "../common/UniversalInput/UniversalInputField";
 import { TaskStatuses } from "../api/api";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { RequestStatusType } from "../../reducer/appReducer";

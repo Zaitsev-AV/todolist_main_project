@@ -1,0 +1,18 @@
+.taskWrapper {
+    display: flex;
+    justify-content: space-between;
+    background: #2f2f2f;
+    padding: 5px 0 5px 15px;
+    margin: 3px;
+    border-radius: 5px;
+}
+.taskWrapper > div {
+    display: flex;
+    align-items: center;
+    /*justify-content: space-between;*/
+    /*padding: 5px;*/
+    margin: 5px;
+}
+.taskWrapper:hover {
+    background: #424242;
+}

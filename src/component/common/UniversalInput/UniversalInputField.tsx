@@ -43,7 +43,9 @@ export const UniversalInputField: React.FC<UniversalInputFieldTypeProps> = ( { c
 						/>
 						{<span style={{color: 'red'}}>{error}</span>}
 					</div>
-					<button className={s.btnInput} onClick={onClickButtonHandler}>+</button>
+					<button className={s.btnInput} onClick={onClickButtonHandler}>
+						<span className={s.textBtn}>+</span>
+					</button>
 				</>
 				:
 				<>

@@ -97,7 +97,37 @@
     opacity: 0;
 }
 .btnInput {
-    /*position: relative;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border: none;
+    background: #1b1b1cd0;
+    cursor: pointer;
+    font-size: 17px;
+    padding: 0.5em 2em;
+    border: transparent;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24);
+    border-radius: 0 10px 10px 0;
+    transition: 0.3s;
+}
+.textBtn {
+    font-weight: 800;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: 0.3s;
+}
+.textBtn:hover {
+    background: #2E2E2E;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: 0.3s;
+}
+
+.btnInput:hover {
+    background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
 }
 
 /*todo input*/
