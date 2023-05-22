@@ -9,7 +9,7 @@
     position: relative;
     width: 180px;
     margin: 12px 5px;
-    --accent-color: #a3e583;
+    --accent-color: #FC466B;
 }
 
 .textInputWrapper:before {
@@ -120,9 +120,10 @@
     transition: 0.3s;
 }
 .textBtn:hover {
-    background: #2E2E2E;
+    /*background: #2E2E2E;*/
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    color: black;
     transition: 0.3s;
 }
 

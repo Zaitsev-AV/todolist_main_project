@@ -30,37 +30,39 @@ export const UniversalInputField: React.FC<UniversalInputFieldTypeProps> = ( { c
 		}
 	}
 	return (
-		<div className={s.wrapper}>
-			{type === 'task'
-				?
-				<>
-					<div className={s.textInputWrapper}>
-						<input value={title}
-						       onChange={onChangeInputHandler}
-						       onKeyDown={onKeyDownHandler}
-						       placeholder={"Type Here"}
-						       className={s.textInput}
-						/>
-						{<span style={{color: 'red'}}>{error}</span>}
-					</div>
-					<button className={s.btnInput} onClick={onClickButtonHandler}>
-						<span className={s.textBtn}>+</span>
-					</button>
-				</>
-				:
-				<>
-					<div className={s.inputGroup}>
-						<input placeholder="Enter new todo list title here"
-						       type="text"
-						       value={title}
-						       onChange={onChangeInputHandler}
-						       onKeyDown={onKeyDownHandler}
-						       className={s.inputField}/>
-						<button className={ s.submitButton } onClick={onClickButtonHandler}><span>ADD</span></button>
-					</div>
-				</>
-			}
-			
-		</div>
+		<>
+			<div className={s.wrapper}>
+				{type === 'task'
+					?
+					<>
+						<div className={s.textInputWrapper}>
+							<input value={title}
+							       onChange={onChangeInputHandler}
+							       onKeyDown={onKeyDownHandler}
+							       placeholder={"Type Here"}
+							       className={s.textInput}
+							/>
+						</div>
+						<button className={s.btnInput} onClick={onClickButtonHandler}>
+							<span className={s.textBtn}>+</span>
+						</button>
+					</>
+					:
+					<>
+						<div className={s.inputGroup}>
+							<input placeholder="Enter new todo list title here"
+							       type="text"
+							       value={ title }
+							       onChange={ onChangeInputHandler }
+							       onKeyDown={ onKeyDownHandler }
+							       className={ s.inputField }/>
+							<button className={ s.submitButton }
+							        onClick={ onClickButtonHandler }><span>ADD</span></button>
+						</div>
+					</>
+				}
+			</div>
+			{ <span style={ { color: 'red' } }>{ error }</span> }{/* нужно переделать добавить нотификацию  */}
+		</>
 	);
 };
