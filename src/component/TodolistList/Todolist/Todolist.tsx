@@ -8,6 +8,8 @@ import { TaskStatuses, TaskType } from "../../api/api";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { Task } from "./Task/Task";
 import { DeleteBtn } from "../../common/DeleteButton/DeleteBtn";
+import { useAppSelector } from "../../../hooks/useAppSelector";
+import { RequestStatusType } from "../../../reducer/appReducer";
 
 export type TodolistPropsType = {
 	todolistID: string
@@ -29,6 +31,7 @@ export const Todolist: React.FC<TodolistPropsType> = ( props ) => {
 		changedTodolistTitle} = props
 	
 	const dispatch = useAppDispatch()
+	
 	useEffect(()=> {
 		dispatch(setTaskTC(todolistID))
 	}, [])

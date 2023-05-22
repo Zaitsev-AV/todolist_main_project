@@ -1,7 +1,7 @@
 import { FilterValueType } from "../App";
 import { Dispatch } from "redux";
 import { todoListAPI, TodoListType } from "../component/api/api";
-import { setAppStatusAC } from "./appReducer";
+import { setGlobalAppStatusAC } from "./appReducer";
 
 const initialState: TodoListsAppType[] = []
 
@@ -83,14 +83,14 @@ export const setTodoListAC = ( todoLists: TodoListType[] ) => {
 
 //thunks
 export const setTodoListTC = () => async ( dispatch: Dispatch ) => {
-	dispatch(setAppStatusAC('loading'))
+	dispatch(setGlobalAppStatusAC('loading'))
 	try {
 		const res = await todoListAPI.getTodoLists()
 		dispatch( setTodoListAC( res.data ) )
-		dispatch(setAppStatusAC('succeeded'))
+		dispatch(setGlobalAppStatusAC('succeeded'))
 	} catch ( e ) {
 		console.log( e )
-		dispatch(setAppStatusAC('failed'))
+		dispatch(setGlobalAppStatusAC('failed'))
 	}
 }
 export const addNewTodoListTC = ( todoListTitle: string ) => ( dispatch: Dispatch ) => {

@@ -2,7 +2,11 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-evenly;
     gap: 5%;
     margin-left: 5%;
     /*background-color: #88706B;*/
+}
+.loaderWrapper {
+    height: 15px;
 }

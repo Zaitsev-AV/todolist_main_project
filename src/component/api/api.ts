@@ -52,7 +52,7 @@ export interface TaskUpdate {
 	deadline: Date
 }
 
-type ResponseType<T = {}> = {
+export type ResponseType<T = {}> = {
 	resultCode: number
 	messages: string[]
 	fieldsErrors: string[]

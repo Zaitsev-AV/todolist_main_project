@@ -16,13 +16,14 @@ import { TaskStatuses } from "../api/api";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { RequestStatusType } from "../../reducer/appReducer";
 import { Preloader } from "../common/Preloader/Preloader";
+import { Notification } from "../common/Notification/Notification";
 
 export type TodoListListPropsType = {};
 export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 	const {} = props
 	const todoLists = useAppSelector<TodoListsAppType[]>( state => state.todoLists )
 	const tasks = useAppSelector<TaskStateType>( state => state.tasks )
-	const status = useAppSelector<RequestStatusType>( state => state.app.status )
+	const status = useAppSelector<RequestStatusType>( state => state.app.globalAppStatus )
 	const dispatch = useAppDispatch()
 	useEffect( () => {
 		dispatch( setTodoListTC() )
@@ -59,6 +60,7 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 			<div>
 				<UniversalInputField callBack={ addNewTodolist } type={'todo'}/>
 			</div>
+			<Notification/>
 			<div className={ 'app' }>
 				{ status === 'loading' ?( <Preloader/>) :
 					<>
