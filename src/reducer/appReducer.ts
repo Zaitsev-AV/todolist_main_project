@@ -54,7 +54,7 @@ export type AppActionType =
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
-type AppReducerType = {
+export type AppReducerType = {
 	globalAppStatus: RequestStatusType
 	localAppStatus: RequestStatusType
 	error: string | null
