@@ -2,6 +2,7 @@ import { FilterValueType } from "../App";
 import { Dispatch } from "redux";
 import { todoListAPI, TodoListType } from "../component/api/api";
 import { setGlobalAppStatusAC } from "./appReducer";
+import { handleServerAppError } from "../component/utils/handelError";
 
 const initialState: TodoListsAppType[] = []
 
@@ -83,29 +84,67 @@ export const setTodoListAC = ( todoLists: TodoListType[] ) => {
 
 //thunks
 export const setTodoListTC = () => async ( dispatch: Dispatch ) => {
-	dispatch(setGlobalAppStatusAC('loading'))
+	dispatch( setGlobalAppStatusAC( 'loading' ) )
 	try {
 		const res = await todoListAPI.getTodoLists()
 		dispatch( setTodoListAC( res.data ) )
-		dispatch(setGlobalAppStatusAC('succeeded'))
+		dispatch( setGlobalAppStatusAC( 'succeeded' ) )
 	} catch ( e ) {
 		console.log( e )
-		dispatch(setGlobalAppStatusAC('failed'))
+		dispatch( setGlobalAppStatusAC( 'failed' ) )
 	}
 }
-export const addNewTodoListTC = ( todoListTitle: string ) => ( dispatch: Dispatch ) => {
-	todoListAPI.createTodoList( todoListTitle )
-		.then( ( res ) => dispatch( addNewTodolistAC( res.data.data.item ) ) )
+export const addNewTodoListTC = ( todoListTitle: string ) => async ( dispatch: Dispatch ) => {
+	dispatch( setGlobalAppStatusAC( 'loading' ) )
+	try {
+		const res = await todoListAPI.createTodoList( todoListTitle )
+		if ( res.data.resultCode === 0 ) {
+			dispatch( addNewTodolistAC( res.data.data.item ) )
+			dispatch( setGlobalAppStatusAC( 'succeeded' ) )
+		} else {
+			//показать ошибку
+			handleServerAppError( res.data, dispatch )
+			dispatch( setGlobalAppStatusAC( 'failed' ) )
+		}
+	} catch ( error ) {
+		// @ts-ignore
+		handleServerNetworkError( error, dispatch )
+	}
+
 }
 
-export const removeTodoListTC = (todoListID: string) => ( dispatch: Dispatch ) => {
-	todoListAPI.removeTodoList(todoListID)
-		.then( ( res ) => dispatch(removeTodolistAC( todoListID ) ))
+export const removeTodoListTC = ( todoListID: string ) => async ( dispatch: Dispatch ) => {
+	dispatch( setGlobalAppStatusAC( 'loading' ) )
+	try {
+		const res = await todoListAPI.removeTodoList( todoListID )
+		if ( res.data.resultCode === 0 ) {
+			dispatch( removeTodolistAC( todoListID ) )
+			dispatch( setGlobalAppStatusAC( 'succeeded' ) )
+		} else {
+			handleServerAppError( res.data, dispatch )
+			dispatch( setGlobalAppStatusAC( 'failed' ) )
+		}
+	}  catch ( error ) {
+		// @ts-ignore
+		handleServerNetworkError( error, dispatch )
+	}
 }
 
-export const changeTodoListTC = (todoListID: string, newTodoListTitle: string) => ( dispatch: Dispatch ) => {
-	todoListAPI.updateTodoList(todoListID, newTodoListTitle)
-		.then( ( res ) => dispatch(changeTodolistTitleAC( todoListID, newTodoListTitle ) ))
+export const changeTodoListTC = (todoListID: string, newTodoListTitle: string) => async ( dispatch: Dispatch ) => {
+	dispatch(setGlobalAppStatusAC('loading'))
+	try {
+		const res = await todoListAPI.updateTodoList(todoListID, newTodoListTitle)
+		if ( res.data.resultCode === 0 ) {
+			dispatch(changeTodolistTitleAC( todoListID, newTodoListTitle ) )
+			dispatch(setGlobalAppStatusAC('succeeded'))
+		} else {
+			handleServerAppError( res.data, dispatch )
+			dispatch( setGlobalAppStatusAC( 'failed' ) )
+		}
+	} catch ( error ) {
+		// @ts-ignore
+		handleServerNetworkError( error, dispatch )
+	}
 }
 
 //types

@@ -127,8 +127,6 @@ export const addTaskTC = ( todoListID: string, title: string ) => async ( dispat
 		// @ts-ignore
 		handleServerNetworkError(error, dispatch)
 		// это для обработки ошибок не связанных с сервером, т.к сервак возвращает код 200 если запрос прошел
-	} finally {
-	
 	}
 }
 
@@ -136,10 +134,11 @@ export const removeTaskTC = ( todolistID: string, taskID: string ) => async ( di
 	dispatch(setLocalAppStatusAC("loading"))
 	try {
 		const res = await taskAPI.removeTask( todolistID, taskID )
-		dispatch( removeTaskAC( todolistID, taskID ) )
-		dispatch(setLocalAppStatusAC('succeeded'))
-	} catch ( e ) {
-		console.log( e )
+			dispatch( removeTaskAC( todolistID, taskID ) )
+			dispatch(setLocalAppStatusAC('succeeded'))
+	} catch ( error ) {
+		// @ts-ignore
+		handleServerNetworkError(error, dispatch)
 	}
 }
 
@@ -168,9 +167,13 @@ export const upDateTaskTC = ( todolistID: string, taskID: string, newTask: Updat
 		if ( res.data.resultCode === 0 ) {
 			dispatch( upDateTaskAC( todolistID, taskID, taskUpDateModel ) )
 			dispatch(setLocalAppStatusAC('succeeded'))
+		} else {
+			//показать ошибку
+			handleServerAppError(res.data, dispatch)
 		}
-	} catch ( e ) {
-		console.warn(e)
+	} catch ( error ) {
+		// @ts-ignore
+		handleServerNetworkError(error, dispatch)
 	}
 	
 }
