@@ -40,7 +40,21 @@ export const taskAPI = {
 	}
 }
 
+//auth api
+
+export const authAPI = {
+	authMe() {
+		return instance.get<ResponseType<AuthResponseType>, AxiosResponse<ResponseType<AuthResponseType>>>('auth/me')
+	}
+}
+
 //types
+
+export type AuthResponseType = {
+	id: number
+	email: string
+	login: string
+}
 
 export interface TaskUpdate {
 	title: string

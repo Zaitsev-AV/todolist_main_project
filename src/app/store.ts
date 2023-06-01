@@ -4,6 +4,7 @@ import { configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { todolistReducer } from "../feauters/TodolistList/Todolist/todolistReducer";
 import { taskReducer } from "../feauters/TodolistList/Todolist/Task/taskReducer";
 import { appReducer } from "./appReducer";
+import { authReducer } from "../feauters/Auth/authReducer";
 
 // const rootReducer = combineReducers({
 // 	todoLists: todolistReducer,
@@ -25,6 +26,7 @@ export const store = configureStore({
 	reducer: {
 		todoLists: todolistReducer,
 		tasks: taskReducer,
-		app: appReducer
+		app: appReducer,
+		auth: authReducer
 	}
 })
