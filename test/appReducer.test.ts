@@ -16,7 +16,7 @@ describe('TaskReducer testing', () => {
 	};
 	it( 'should be correctly change the global status of the app', () => {
 		
-		const endState = appReducer( startState, setGlobalAppStatusAC( "loading" ) );
+		const endState = appReducer( startState, setGlobalAppStatusAC( { globalAppStatus:"loading" } ) );
 		
 		expect( endState.globalAppStatus ).toBe( 'loading' );
 		expect( endState.localAppStatus ).toBe( 'idle' );
@@ -24,7 +24,7 @@ describe('TaskReducer testing', () => {
 	} );
 	
 	it( 'should be correctly change the global status of the app', () => {
-		const endState = appReducer( startState, setLocalAppStatusAC( "loading" ) );
+		const endState = appReducer( startState, setLocalAppStatusAC( { localAppStatus:"loading" } ) );
 		
 		expect( endState.localAppStatus ).toBe( 'loading' );
 		expect( endState.globalAppStatus ).toBe( 'idle' );
@@ -35,7 +35,7 @@ describe('TaskReducer testing', () => {
 		
 		const testError = "this test error"
 		
-		const endState = appReducer( startState, setAppErrorAC( testError ) );
+		const endState = appReducer( startState, setAppErrorAC( { error:testError } ) );
 		
 		expect( endState.localAppStatus ).toBe( 'idle' );
 		expect( endState.globalAppStatus ).toBe( 'idle' );

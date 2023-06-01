@@ -2,8 +2,7 @@ import { addNewTodolistAC, setTodoListAC } from "./todolistReducer";
 import { Dispatch } from "redux";
 import { taskAPI, TaskPriorities, TaskStatuses, TaskType, TaskUpdate } from "../component/api/api";
 import { AppRootStateType } from "./store";
-import { setAppErrorAC, setGlobalAppStatusAC, setLocalAppStatusAC } from "./appReducer";
-import { AxiosError } from "axios";
+import { setLocalAppStatusAC } from "./appReducer";
 import { handleServerAppError, handleServerNetworkError } from "../component/utils/handelError";
 
 
@@ -102,23 +101,23 @@ export const setTasksAC = ( todoListID: string, tasks: TaskType[] ) => {
 
 // thunks creators
 export const setTaskTC = ( todoListID: string ) => async ( dispatch: Dispatch ) => {
-	dispatch(setLocalAppStatusAC("loading"))
+	dispatch(setLocalAppStatusAC( { localAppStatus:"loading" }))
 	try {
 		const res = await taskAPI.setTask( todoListID )
 		dispatch( setTasksAC( todoListID, res.data.items ) )
-		dispatch(setLocalAppStatusAC("succeeded"))
+		dispatch(setLocalAppStatusAC( { localAppStatus:"succeeded" }))
 	} catch ( e ) {
 		    console.warn(e)
 	}
 }
 
 export const addTaskTC = ( todoListID: string, title: string ) => async ( dispatch: Dispatch ) => {
-	dispatch(setLocalAppStatusAC("loading"))
+	dispatch(setLocalAppStatusAC( { localAppStatus:"loading" }))
 	try {
 		const res = await taskAPI.addTask( todoListID , title)
 		if ( res.data.resultCode === 0 ) {
 			dispatch( addTaskAC( todoListID, res.data.data.item ) )
-			dispatch(setLocalAppStatusAC('succeeded'))
+			dispatch(setLocalAppStatusAC( { localAppStatus:'succeeded' }))
 		} else {
 			//показать ошибку
 			handleServerAppError(res.data, dispatch)
@@ -131,11 +130,11 @@ export const addTaskTC = ( todoListID: string, title: string ) => async ( dispat
 }
 
 export const removeTaskTC = ( todolistID: string, taskID: string ) => async ( dispatch: Dispatch ) => {
-	dispatch(setLocalAppStatusAC("loading"))
+	dispatch( setLocalAppStatusAC( { localAppStatus: "loading" } ) )
 	try {
 		const res = await taskAPI.removeTask( todolistID, taskID )
-			dispatch( removeTaskAC( todolistID, taskID ) )
-			dispatch(setLocalAppStatusAC('succeeded'))
+		dispatch( removeTaskAC( todolistID, taskID ) )
+		dispatch( setLocalAppStatusAC( { localAppStatus: 'succeeded' } ) )
 	} catch ( error ) {
 		// @ts-ignore
 		handleServerNetworkError(error, dispatch)
@@ -162,11 +161,11 @@ export const upDateTaskTC = ( todolistID: string, taskID: string, newTask: Updat
 		...newTask // здесь мы затираем в объекте который отправим на сервер поля которые изменились.
 	}
 	try {
-		dispatch(setLocalAppStatusAC("loading"))
+		dispatch( setLocalAppStatusAC( { localAppStatus: "loading" } ) )
 		const res = await taskAPI.updateTask( todolistID, taskID, taskUpDateModel )
 		if ( res.data.resultCode === 0 ) {
 			dispatch( upDateTaskAC( todolistID, taskID, taskUpDateModel ) )
-			dispatch(setLocalAppStatusAC('succeeded'))
+			dispatch( setLocalAppStatusAC( { localAppStatus: 'succeeded' } ) )
 		} else {
 			//показать ошибку
 			handleServerAppError(res.data, dispatch)

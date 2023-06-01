@@ -40,7 +40,7 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 		dispatch(upDateTaskTC(todolistID, taskID, {status}))
 	}
 	const changedFilter = ( todolistID: string, newFilter: FilterValueType ) => {
-		dispatch( changedFilterAC( todolistID, newFilter ) )
+		dispatch( changedFilterAC( { todolistID, newFilter } ) )
 	}
 	const removeTodolist = ( todolistID: string ) => {
 		dispatch(removeTodoListTC(todolistID))
