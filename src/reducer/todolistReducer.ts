@@ -22,7 +22,7 @@ const slice = createSlice( {
 			if ( index > -1 ) state.splice( index, 1 )
 		},
 		addNewTodolistAC: ( state, action: PayloadAction<{ newTodoList: TodoListType }> ) => {
-			state.push( { ...action.payload.newTodoList, filter: "all" } )
+			state.unshift( { ...action.payload.newTodoList, filter: "all" } )
 		},
 		changeTodolistTitleAC: ( state, action: PayloadAction<{ todolistID: string, newTitle: string }> ) => {
 			const index = state.findIndex(el => el.id === action.payload.todolistID)
@@ -35,37 +35,6 @@ const slice = createSlice( {
 	}
 } )
 
-
-// export const _todolistReducer = ( state: TodoListsAppType[] = initialState, action: ActionType ): TodoListsAppType[] => {
-// 	switch ( action.type ) {
-// 		case 'NEW-FILTER-VALUE': {
-// 			return state.map( el => el.id === action.payload.todolistID
-// 				? { ...el, filter: action.payload.newFilter }
-// 				: el )
-// 		}
-// 		case "REMOVE-TODOLIST": {
-// 			return state.filter( s => s.id !== action.payload.todolistID )
-// 		}
-// 		case "ADD-NEW-TODO-LIST": {
-// 			return [
-// 				{ ...action.payload.newTodoList, filter: "all" }, ...state
-// 			]
-// 		}
-// 		case "CHANGE-TODOLIST-TITLE": {
-// 			return state.map( el => el.id === action.payload.todolistID
-// 				?
-// 				{ ...el, title: action.payload.newTitle }
-// 				: el
-// 			)
-// 		}
-// 		case "SET-TODOLIST": {
-// 			return action.payload.todoLists
-// 				.map( ( el ) => ( { ...el, filter: "all" } ) )
-// 		}
-// 		default :
-// 			return state
-// 	}
-// }
 export const todolistReducer = slice.reducer
 export const {
 	changedFilterAC,
@@ -74,50 +43,6 @@ export const {
 	addNewTodolistAC,
 	setTodoListAC
 } = slice.actions
-// action creators
-// export const changedFilterAC = ( todolistID: string, newFilter: FilterValueType) => {
-// 	return {
-// 		type: 'NEW-FILTER-VALUE',
-// 		payload: {
-// 			todolistID,
-// 			newFilter
-// 		}
-// 	} as const
-// }
-//
-// export const removeTodolistAC = ( todolistID: string) => {
-// 	return {
-// 		type: "REMOVE-TODOLIST",
-// 		payload: {
-// 			todolistID
-// 		}
-// 	} as const
-// }
-//
-// export const addNewTodolistAC = ( newTodoList: TodoListType) => {
-// 	return {
-// 		type: 'ADD-NEW-TODO-LIST',
-// 		payload: {
-// 			newTodoList
-// 		}
-// 	} as const
-// }
-// export const changeTodolistTitleAC = ( todolistID: string, newTitle: string ) => {
-// 	return {
-// 		type: 'CHANGE-TODOLIST-TITLE',
-// 		payload: {
-// 			todolistID,
-// 			newTitle
-// 		}
-// 	} as const
-// }
-//
-// export const setTodoListAC = ( todoLists: TodoListType[] ) => {
-// 	return {
-// 		type: "SET-TODOLIST",
-// 		payload: { todoLists }
-// 	} as const
-// }
 
 //thunks
 export const setTodoListTC = () => async ( dispatch: Dispatch ) => {

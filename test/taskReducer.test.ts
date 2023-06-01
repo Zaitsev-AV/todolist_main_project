@@ -62,7 +62,7 @@ describe('TaskReducer testing', () => {
 	};
 	it('should remove task from correct todolist', () => {
 
-		const endState = taskReducer(startState, removeTaskAC('todolist1', '1'));
+		const endState = taskReducer( startState, removeTaskAC( { todolistID: 'todolist1', taskID: '1' } ) );
 		
 		expect(endState.todolist1.length).toBe(1);
 		expect(endState.todolist2.length).toBe(2);
@@ -76,14 +76,14 @@ describe('TaskReducer testing', () => {
 			completed: false,
 			status: TaskStatuses.New,
 			priority: TaskPriorities.Low,
-			startDate:  new Date(),
+			startDate: new Date(),
 			deadline: new Date(),
 			id: '5',
 			todoListId: 'todolist1',
 			order: 1,
 			addedDate: new Date(),
 		}
-		const endState = taskReducer(startState, addTaskAC('todolist1', task));
+		const endState = taskReducer( startState, addTaskAC( { todolistID: 'todolist1', task: task } ) );
 		
 		expect(endState.todolist1.length).toBe(3);
 		expect(endState.todolist2.length).toBe(2);
@@ -94,7 +94,8 @@ describe('TaskReducer testing', () => {
 	it('should change task status', () => {
 		
 		const status = TaskStatuses.Draft
-		const endState = taskReducer(startState, upDateTaskAC('todolist1', '1', {status}));
+		const endState = taskReducer( startState,
+			upDateTaskAC( { todolistID: 'todolist1', taskID: '1', newTask: { status } } ) );
 		
 		// expect(endState.todolist1[0].isDone).toBeTruthy();
 		// expect(endState.todolist2[0].isDone).toBeFalsy();
@@ -102,7 +103,7 @@ describe('TaskReducer testing', () => {
 	
 	it('should remove tasks object', () => {
 		
-		const endState = taskReducer(startState, removeTasksObjAC('todolist1'));
+		const endState = taskReducer(startState, removeTasksObjAC( {todolistID: 'todolist1' }));
 		
 		expect(endState.todolist1).toBeUndefined();
 		expect(endState.todolist2.length).toBe(2);
@@ -111,7 +112,7 @@ describe('TaskReducer testing', () => {
 	it('should be correct changed title task', () => {
 		const title = 'new task title'
 		
-		const endState = taskReducer(startState, upDateTaskAC('todolist1', '1', {title}));
+		const endState = taskReducer(startState, upDateTaskAC({todolistID: 'todolist1',taskID: '1',newTask: {title}}));
 		
 		expect(endState['todolist1'][0].title).toBe('new task title')
 		expect(endState.todolist2.length).toBe(2);

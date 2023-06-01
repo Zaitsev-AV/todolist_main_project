@@ -30,7 +30,7 @@ describe("todolistReducer", () => {
 	
 	it("NEW-FILTER-VALUE action", () => {
 		
-		const action = changedFilterAC("1", "completed");
+		const action = changedFilterAC( { todolistID: "1",newFilter: "completed" });
 		const newState = todolistReducer(initialState, action);
 		
 		assert.deepEqual(newState[0].filter, "completed");
@@ -38,7 +38,7 @@ describe("todolistReducer", () => {
 	});
 	
 	it("REMOVE-TODOLIST action", () => {
-		const action = removeTodolistAC("1");
+		const action = removeTodolistAC( {todolistID: "1" });
 		const newState = todolistReducer(initialState, action);
 		assert.equal(newState.length, 1);
 		assert.equal(newState[0].id, "2");
@@ -53,7 +53,7 @@ describe("todolistReducer", () => {
 			filter: "all",
 		};
 		
-		const action = addNewTodolistAC(newTodoList);
+		const action = addNewTodolistAC( { newTodoList: newTodoList });
 		const newState = todolistReducer(initialState, action);
 		
 		assert.equal (newState.length, 3);
@@ -62,7 +62,7 @@ describe("todolistReducer", () => {
 	});
 	
 	it("CHANGE-TODOLIST-TITLE action", () => {
-		const action = changeTodolistTitleAC("1", "New Title");
+		const action = changeTodolistTitleAC( {todolistID: "1",newTitle: "New Title" });
 		const newState = todolistReducer(initialState, action);
 		assert.equal(newState[0].title, "New Title");
 	});
@@ -77,7 +77,7 @@ describe("todolistReducer", () => {
 				filter: "all",
 			},
 		];
-		const action = setTodoListAC(todoLists);
+		const action = setTodoListAC( { todoLists });
 		const newState = todolistReducer(initialState, action);
 		assert.equal(newState.length, 1);
 		assert.equal(newState[0].id, "4");
