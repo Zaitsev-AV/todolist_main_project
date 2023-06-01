@@ -62,7 +62,7 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 			</div>
 			<Notification/>
 			<div className={ 'app' }>
-				{ status === 'loading' ?( <Preloader/>) :
+				{ status === 'loading' ?( <span className='preloader'><Preloader/></span> ) :
 					<>
 					{
 						todoLists.map( el => {

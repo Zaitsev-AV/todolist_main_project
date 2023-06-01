@@ -1,7 +1,7 @@
 import { describe, it } from 'vitest';
 import {
 	appReducer,
-	AppReducerType,
+	AppStateType,
 	setAppErrorAC,
 	setGlobalAppStatusAC,
 	setLocalAppStatusAC
@@ -9,7 +9,7 @@ import {
 
 
 describe('TaskReducer testing', () => {
-	const startState: AppReducerType = {
+	const startState: AppStateType = {
 		globalAppStatus: 'idle',
 		localAppStatus: 'idle',
 		error: null
