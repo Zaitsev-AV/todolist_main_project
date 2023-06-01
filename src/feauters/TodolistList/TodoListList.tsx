@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
-import { Todolist } from "./Todolist/Todolist";
+import { useAppSelector } from "../../common/hooks/useAppSelector";
 import {
 	addNewTodoListTC,
-	changedFilterAC,
-	changeTodoListTC,
+	changedFilterAC, changeTodoListTC,
 	removeTodoListTC,
 	setTodoListTC,
 	TodoListsAppType
-} from "../../reducer/todolistReducer";
-import { addTaskTC, removeTaskTC, TaskStateType, upDateTaskTC } from "../../reducer/taskReducer";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { FilterValueType } from "../../App";
-import { UniversalInputField } from "../common/UniversalInput/UniversalInputField";
+} from "./Todolist/todolistReducer";
+import { addTaskTC, removeTaskTC, TaskStateType, upDateTaskTC } from "./Todolist/Task/taskReducer";
+import { RequestStatusType } from "../../app/appReducer";
+import { useAppDispatch } from "../../common/hooks/useAppDispatch";
 import { TaskStatuses } from "../api/api";
-import { useAppSelector } from "../../hooks/useAppSelector";
-import { RequestStatusType } from "../../reducer/appReducer";
-import { Preloader } from "../common/Preloader/Preloader";
-import { Notification } from "../common/Notification/Notification";
+import { FilterValueType } from "../../app/App";
+import { UniversalInputField } from "../../common/components/UniversalInput/UniversalInputField";
+import { Preloader } from "../../common/components/Preloader/Preloader";
+import { Todolist } from "./Todolist/Todolist";
+import { Notification } from "../../common/components/Notification/Notification";
+
 
 export type TodoListListPropsType = {};
 export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {

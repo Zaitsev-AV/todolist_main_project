@@ -1,12 +1,7 @@
 import { describe, it } from 'vitest';
-import {
-	addTaskAC,
-	removeTaskAC,
-	removeTasksObjAC,
-	taskReducer,
-	TaskStateType, upDateTaskAC
-} from "../src/reducer/taskReducer";
-import { TaskPriorities, TaskStatuses, TaskType } from "../src/component/api/api";
+import { addTaskAC, removeTaskAC, removeTasksObjAC, taskReducer, TaskStateType, upDateTaskAC } from "./taskReducer";
+import { TaskPriorities, TaskStatuses, TaskType } from "../../../api/api";
+
 
 
 describe('TaskReducer testing', () => {

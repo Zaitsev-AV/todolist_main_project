@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
-import { setTaskTC } from "../../../reducer/taskReducer";
-import { UniversalInputField } from "../../common/UniversalInput/UniversalInputField";
 import s from './Todolist.module.css'
-import { FilterValueType } from "../../../App";
-import { EditableText } from "../../EditableText/EditableText";
 import { TaskStatuses, TaskType } from "../../api/api";
-import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { FilterValueType } from "../../../app/App";
+import { useAppDispatch } from "../../../common/hooks/useAppDispatch";
+import { setTaskTC } from "./Task/taskReducer";
+import { UniversalInputField } from "../../../common/components/UniversalInput/UniversalInputField";
+import { DeleteBtn } from "../../../common/components/DeleteButton/DeleteBtn";
+import { EditableText } from "../../../common/components/EditableText/EditableText";
 import { Task } from "./Task/Task";
-import { DeleteBtn } from "../../common/DeleteButton/DeleteBtn";
-import { useAppSelector } from "../../../hooks/useAppSelector";
-import { RequestStatusType } from "../../../reducer/appReducer";
+
 
 export type TodolistPropsType = {
 	todolistID: string

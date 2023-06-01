@@ -1,9 +1,9 @@
 import React, { ChangeEvent } from 'react';
-import { EditableText } from "../../../EditableText/EditableText";
-import { TaskStatuses } from "../../../api/api";
-import { DeleteBtn } from "../../../common/DeleteButton/DeleteBtn";
 import s from './Task.module.css'
-import { CustomCheckbox } from "../../../common/CustomCheckbox/CustomCheckbox";
+import { TaskStatuses } from "../../../api/api";
+import { CustomCheckbox } from "../../../../common/components/CustomCheckbox/CustomCheckbox";
+import { EditableText } from "../../../../common/components/EditableText/EditableText";
+import { DeleteBtn } from "../../../../common/components/DeleteButton/DeleteBtn";
 
 export type TaskPropsType = {
 	title: string

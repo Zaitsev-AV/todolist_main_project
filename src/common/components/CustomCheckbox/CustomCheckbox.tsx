@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
-import { TaskStatuses } from "../../api/api";
 import s from './CustomCheckbox.module.css'
+import { TaskStatuses } from "../../../feauters/api/api";
 
 export type CustomCheckboxPropsType = {
 	status: TaskStatuses

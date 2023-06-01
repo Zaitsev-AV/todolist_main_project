@@ -1,10 +1,10 @@
-import { addNewTodolistAC, setTodoListAC } from "./todolistReducer";
 import { Dispatch } from "redux";
-import { taskAPI, TaskPriorities, TaskStatuses, TaskType, TaskUpdate, TodoListType } from "../component/api/api";
-import { AppRootStateType } from "./store";
-import { setLocalAppStatusAC } from "./appReducer";
-import { handleServerAppError, handleServerNetworkError } from "../component/utils/handelError";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { taskAPI, TaskPriorities, TaskStatuses, TaskType, TaskUpdate } from "../../../api/api";
+import { addNewTodolistAC, setTodoListAC } from "../todolistReducer";
+import { setLocalAppStatusAC } from "../../../../app/appReducer";
+import { handleServerAppError } from "../../../../common/utils/handelError";
+import { AppRootStateType } from "../../../../app/store";
 
 
 const initialState: TaskStateType = {}
@@ -29,6 +29,7 @@ const slice = createSlice( {
 			taskID: string,
 			newTask: UpdateTaskModelType
 		}> ) => {
+			debugger
 			const index = state[ action.payload.todolistID ].findIndex( el => el.id === action.payload.taskID )
 			state[ action.payload.todolistID ][ index ] = { ...state[ action.payload.todolistID ][ index ], ...action.payload.newTask }
 		},

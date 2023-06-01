@@ -1,13 +1,12 @@
 import { assert, describe, it } from "vitest";
 import {
-	todolistReducer,
-	changedFilterAC,
-	removeTodolistAC,
 	addNewTodolistAC,
-	changeTodolistTitleAC,
-	setTodoListAC,
-	TodoListsAppType,
-} from "../src/reducer/todolistReducer";
+	changedFilterAC, changeTodolistTitleAC,
+	removeTodolistAC, setTodoListAC,
+	todolistReducer,
+	TodoListsAppType
+} from "./Todolist/todolistReducer";
+
 
 
 describe("todolistReducer", () => {

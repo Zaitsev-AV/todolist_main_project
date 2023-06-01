@@ -1,9 +1,10 @@
-import { FilterValueType } from "../App";
 import { Dispatch } from "redux";
-import { todoListAPI, TodoListType } from "../component/api/api";
-import { setGlobalAppStatusAC } from "./appReducer";
-import { handleServerAppError } from "../component/utils/handelError";
+
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { FilterValueType } from "../../../app/App";
+import { todoListAPI, TodoListType } from "../../api/api";
+import { setGlobalAppStatusAC } from "../../../app/appReducer";
+import { handleServerAppError } from "../../../common/utils/handelError";
 
 const initialState: TodoListsAppType[] = []
 
@@ -13,8 +14,9 @@ const slice = createSlice( {
 	initialState: initialState,
 	reducers: {
 		changedFilterAC: ( state, action: PayloadAction<{ todolistID: string, newFilter: FilterValueType }> ) => {
-			const index = state.findIndex(el => el.id === action.payload.todolistID)
-			state[index].filter = action.payload.newFilter
+			const index =  action.payload.todolistID
+			// const index = state.findIndex(el => el.id === action.payload.todolistID)
+			state.map(el => el.id === index ? el.filter = action.payload.newFilter : el  )
 		},
 		removeTodolistAC: ( state, action: PayloadAction<{ todolistID: string }> ) => {
 			// state.filter( s => s.id !== action.payload.todolistID )

@@ -1,9 +1,9 @@
 import React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, {AlertProps} from '@mui/material/Alert';
-import { useAppDispatch } from "../../../hooks/useAppDispatch";
-import { useAppSelector } from "../../../hooks/useAppSelector";
-import { setAppErrorAC } from "../../../reducer/appReducer";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { setAppErrorAC } from "../../../app/appReducer";
 
 export type NotificationPropsType = {
 
@@ -24,7 +24,7 @@ export const Notification: React.FC<NotificationPropsType> = ( props ) => {
 		if (reason === 'clickaway') {
 			return;
 		}
-		dispatch(setAppErrorAC(null))
+		dispatch(setAppErrorAC( { error:null }))
 	};
 	return (
 		<Snackbar open={error !== null} autoHideDuration={6000} onClose={handleClose}>

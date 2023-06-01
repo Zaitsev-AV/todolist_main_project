@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
-import { setAppErrorAC, setGlobalAppStatusAC } from "../../reducer/appReducer";
-import { ResponseType } from "../api/api";
+import { setAppErrorAC, setGlobalAppStatusAC } from "../../app/appReducer";
+import {ResponseType} from "../../feauters/api/api";
 
 export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch) => {
 	if (data.messages.length) {

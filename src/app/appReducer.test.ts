@@ -1,11 +1,6 @@
 import { describe, it } from 'vitest';
-import {
-	appReducer,
-	AppStateType,
-	setAppErrorAC,
-	setGlobalAppStatusAC,
-	setLocalAppStatusAC
-} from "../src/reducer/appReducer";
+import { appReducer, AppStateType, setAppErrorAC, setGlobalAppStatusAC, setLocalAppStatusAC } from "./appReducer";
+
 
 
 describe('TaskReducer testing', () => {

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FocusEvent, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 export type MarkTitlePropsType = {
 	callBack: (newTitle: string) => void
