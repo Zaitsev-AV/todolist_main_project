@@ -11,6 +11,10 @@
 	box-shadow: 0 15px 25px rgba(0,0,0,.6);
 	border-radius: 10px;
 }
+.checkbox {
+	color:  #fff;
+	padding-left: 7px;
+}
 
 .error {
 	color: #1BFD9C;

@@ -7,7 +7,8 @@ import * as yup from "yup";
 
 const schema = yup.object( {
 	email: yup.string().required().email( 'Email is not valid' ),
-	password: yup.string().required().min(8, 'Password should be at least 8 characters long')
+	password: yup.string().required().min(8, 'Password should be at least 8 characters long'),
+	rememberMe: new yup.BooleanSchema
 } ).required()
 type FormData = yup.InferType<typeof schema>;
 
@@ -40,6 +41,14 @@ export const LoginForm: React.FC = () => {
 						name="password"
 						type="password"/>
 					<label>Password</label>
+					<div className={s.error}>{ errors.password?.message }</div>
+				</div>
+				<div >
+					<input
+						{ ...register( 'rememberMe' ) }
+						name="rememberMe"
+						type="checkbox"/>
+					<label className={s.checkbox}>Remember me</label>
 					<div className={s.error}>{ errors.password?.message }</div>
 				</div>
 				<button type='submit'>
