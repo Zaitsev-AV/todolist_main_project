@@ -91,7 +91,7 @@ export const addTaskTC = ( todoListID: string, title: string ) => async ( dispat
 export const removeTaskTC = ( todolistID: string, taskID: string ) => async ( dispatch: Dispatch ) => {
 	dispatch( setLocalAppStatusAC( { localAppStatus: "loading" } ) )
 	try {
-		const res = await taskAPI.removeTask( todolistID, taskID )
+		await taskAPI.removeTask( todolistID, taskID )
 		dispatch( removeTaskAC( { todolistID, taskID } ) )
 		dispatch( setLocalAppStatusAC( { localAppStatus: 'succeeded' } ) )
 	} catch ( error ) {
@@ -146,15 +146,6 @@ export type UpdateTaskModelType = { // этот тип нужен, чтобы с
 	startDate?: Date
 	deadline?: Date
 }
-
-type ActionType =
-	| ReturnType<typeof removeTaskAC>
-	| ReturnType<typeof addTaskAC>
-	| ReturnType<typeof removeTasksObjAC>
-	| ReturnType<typeof addNewTodolistAC>
-	| ReturnType<typeof setTodoListAC>
-	| ReturnType<typeof setTasksAC>
-	| ReturnType<typeof upDateTaskAC>
 
 export type TaskStateType = {
 	[ key: string ]: TaskType[]

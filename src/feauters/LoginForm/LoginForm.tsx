@@ -16,7 +16,7 @@ export const LoginForm: React.FC = () => {
 	
 	const { register,
 		handleSubmit,
-		watch, formState: { errors } } = useForm<FormData>({
+		formState: { errors } } = useForm<FormData>({
 		resolver: yupResolver(schema)
 	});
 	const onSubmit: SubmitHandler<FormData> = data => console.log( data );

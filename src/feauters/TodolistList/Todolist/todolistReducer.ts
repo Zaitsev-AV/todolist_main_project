@@ -120,10 +120,3 @@ export type TodoListsAppType = {
 	title: string
 	filter: FilterValueType
 }
-
-type ActionType =
-	| ReturnType<typeof changedFilterAC>
-	| ReturnType<typeof removeTodolistAC>
-	| ReturnType<typeof addNewTodolistAC>
-	| ReturnType<typeof changeTodolistTitleAC>
-	| ReturnType<typeof setTodoListAC>

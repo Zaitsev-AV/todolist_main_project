@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useAppSelector } from "../../common/hooks/useAppSelector";
+import { useAppSelector } from "@/common/hooks/useAppSelector";
 import {
 	addNewTodoListTC,
 	changedFilterAC, changeTodoListTC,

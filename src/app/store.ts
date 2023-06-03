@@ -1,10 +1,10 @@
 import { Action } from "redux";
 
 import { configureStore, ThunkAction } from "@reduxjs/toolkit";
-import { todolistReducer } from "../feauters/TodolistList/Todolist/todolistReducer";
-import { taskReducer } from "../feauters/TodolistList/Todolist/Task/taskReducer";
+import { todolistReducer } from "@/feauters/TodolistList/Todolist/todolistReducer";
+import { taskReducer } from "@/feauters/TodolistList/Todolist/Task/taskReducer";
 import { appReducer } from "./appReducer";
-import { authReducer } from "../feauters/Auth/authReducer";
+import { authReducer } from "@/feauters/Auth/authReducer";
 
 // const rootReducer = combineReducers({
 // 	todoLists: todolistReducer,
