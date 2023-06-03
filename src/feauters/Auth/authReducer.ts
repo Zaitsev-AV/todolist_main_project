@@ -11,23 +11,27 @@ const slice = createSlice( {
 	name: 'auth',
 	initialState,
 	reducers: {
-		login: ( state, action: PayloadAction<{ isLoggedIn: boolean }> ) => {
+		setIsLoggedIn: ( state, action: PayloadAction<{ isLoggedIn: boolean }> ) => {
 			state.isLoggedIn = action.payload.isLoggedIn
 		}
 	}
 } )
-const authMe = createAppAsyncThunk<void, void>( 'auth/login', async ( arg, thunkAPI ) => {
+const authMe = createAppAsyncThunk<void, void>( 'auth/me', async ( arg, thunkAPI ) => {
 		const {dispatch} = thunkAPI
 		try {
 			const res = await authAPI.authMe()
 			if ( res.data.resultCode === 0 ) {
-				dispatch( authActions.login({isLoggedIn: true}) )
+				dispatch( authActions.setIsLoggedIn({isLoggedIn: true}) )
 			}
 		} catch ( e ) {
 		
 		}
 	}
 )
+
+const login = createAppAsyncThunk<void, void>('auth/login', async (arg, thunkAPI)=> {
+
+})
 
 export const authReducer = slice.reducer
 export const authActions = slice.actions
