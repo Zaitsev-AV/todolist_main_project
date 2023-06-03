@@ -29,7 +29,6 @@ const slice = createSlice( {
 			taskID: string,
 			newTask: UpdateTaskModelType
 		}> ) => {
-			debugger
 			const index = state[ action.payload.todolistID ].findIndex( el => el.id === action.payload.taskID )
 			state[ action.payload.todolistID ][ index ] = { ...state[ action.payload.todolistID ][ index ], ...action.payload.newTask }
 		},

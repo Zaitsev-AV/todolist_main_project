@@ -11,7 +11,7 @@ import { authReducer } from "../feauters/Auth/authReducer";
 // 	tasks: taskReducer,
 // 	app: appReducer
 // })
-
+export type AppDispatch = typeof store.dispatch;
 export type AppRootStateType = ReturnType<typeof store.getState>
 export type AppThunk<ReturnType = void> = ThunkAction<
 	ReturnType,

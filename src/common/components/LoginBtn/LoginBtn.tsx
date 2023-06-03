@@ -1,10 +1,10 @@
 import React from 'react';
 import s from './LoginBtn.module.css'
-export type LoginBtnPropsType = {
 
-};
-export const LoginBtn: React.FC<LoginBtnPropsType> = ( props ) => {
-	const {} = props
+
+export const LoginBtn: React.FC = (  ) => {
+	
+	
 	return (
 		<button className={s.btn}>
 			
