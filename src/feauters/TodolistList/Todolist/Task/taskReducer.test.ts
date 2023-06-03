@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest';
 import { addTaskAC, removeTaskAC, removeTasksObjAC, taskReducer, TaskStateType, upDateTaskAC } from "./taskReducer";
-import { TaskPriorities, TaskStatuses, TaskType } from "../../../api/api";
+import { TaskPriorities, TaskStatuses, TaskType } from "feauters/Api/apiProject";
 
 
 

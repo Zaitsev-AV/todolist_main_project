@@ -1,10 +1,10 @@
 import { Dispatch } from "redux";
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { FilterValueType } from "../../../app/App";
-import { todoListAPI, TodoListType } from "../../api/api";
-import { setGlobalAppStatusAC } from "../../../app/appReducer";
-import { handleServerAppError } from "../../../common/utils/handelError";
+import { FilterValueType } from "@/app/App";
+import { todoListAPI, TodoListType } from "@/feauters/Api/apiProject";
+import { setGlobalAppStatusAC } from "@/app/appReducer";
+import { handleServerAppError } from "@/common/utils/handelError";
 
 const initialState: TodoListsAppType[] = []
 

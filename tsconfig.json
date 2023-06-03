@@ -2,6 +2,10 @@
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
     "skipLibCheck": true,
@@ -20,5 +24,6 @@
     "vite.config.ts",
     "src"
   ],
-  "references": [{ "path": "./tsconfig.node.json" }]
-}
+  "references": [{ "path": "./tsconfig.node.json" }],
+    "allowSyntheticDefaultImports": true
+  }

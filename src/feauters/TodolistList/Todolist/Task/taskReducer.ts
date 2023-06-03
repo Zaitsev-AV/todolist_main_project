@@ -1,10 +1,10 @@
 import { Dispatch } from "redux";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { taskAPI, TaskPriorities, TaskStatuses, TaskType, TaskUpdate } from "../../../api/api";
+import { taskAPI, TaskPriorities, TaskStatuses, TaskType, TaskUpdate } from "@/feauters/Api/apiProject";
 import { addNewTodolistAC, setTodoListAC } from "../todolistReducer";
-import { setLocalAppStatusAC } from "../../../../app/appReducer";
-import { handleServerAppError } from "../../../../common/utils/handelError";
-import { AppRootStateType } from "../../../../app/store";
+import { setLocalAppStatusAC } from "@/app/appReducer";
+import { handleServerAppError } from "@/common/utils/handelError";
+import { AppRootStateType } from "@/app/store";
 
 
 const initialState: TaskStateType = {}

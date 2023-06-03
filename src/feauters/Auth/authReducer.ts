@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Dispatch } from "redux";
+import { authAPI } from "../Api/apiProject";
 
 const initialState: InitialStateType = {
 	isLoggedIn: false
@@ -17,10 +18,14 @@ const slice = createSlice( {
 } )
 
 export const authReducer = slice.reducer
+export const {login} = slice.actions
 
 const loginTC = () => async ( dispatch: Dispatch ) => {
 	try {
-	
+	const res = await authAPI.authMe()
+		if ( res.data.resultCode === 0 ) {
+			dispatch(login)
+		}
 	} catch ( e ) {
 	
 	}
