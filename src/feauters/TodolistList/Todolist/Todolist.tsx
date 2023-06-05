@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import s from './Todolist.module.css'
 import { FilterValueType } from "@/app/App";
 import { useAppDispatch } from "@/common/hooks/useAppDispatch";
-import { setTaskTC } from "./Task/taskReducer";
 import { UniversalInputField } from "@/common/components/UniversalInput/UniversalInputField";
 import { DeleteBtn } from "@/common/components/DeleteButton/DeleteBtn";
 import { EditableText } from "@/common/components/EditableText/EditableText";
 import { Task } from "./Task/Task";
 import { TaskStatuses, TaskType } from "@/feauters/Api/apiProject";
+import { tasksThunks } from "@/feauters/TodolistList/Todolist/Task/taskReducer";
 
 
 export type TodolistPropsType = {
@@ -32,7 +32,7 @@ export const Todolist: React.FC<TodolistPropsType> = ( props ) => {
 	const dispatch = useAppDispatch()
 	
 	useEffect(()=> {
-		dispatch(setTaskTC(todolistID))
+		dispatch(tasksThunks.setTask(todolistID))
 	}, [])
 	const addTaskHandler = ( title: string ) => addTask( todolistID, title )
 	

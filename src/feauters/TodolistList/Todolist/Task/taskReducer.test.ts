@@ -1,7 +1,6 @@
 import { describe, it } from 'vitest';
-import { addTaskAC, removeTaskAC, removeTasksObjAC, taskReducer, TaskStateType, upDateTaskAC } from "./taskReducer";
-import { TaskPriorities, TaskStatuses, TaskType } from "@/feauters/Api/apiProject";
-
+import { removeTasksObjAC, taskReducer, TaskStateType, tasksThunks } from "./taskReducer";
+import { TaskPriorities, TaskStatuses, TaskType, UpDateTaskArgType } from "@/feauters/Api/apiProject";
 
 
 describe('TaskReducer testing', () => {
@@ -56,12 +55,16 @@ describe('TaskReducer testing', () => {
 		],
 	};
 	it('should remove task from correct todolist', () => {
-
-		const endState = taskReducer( startState, removeTaskAC( { todolistID: 'todolist1', taskID: '1' } ) );
 		
-		expect(endState.todolist1.length).toBe(1);
-		expect(endState.todolist2.length).toBe(2);
-		expect(endState.todolist1.every((t) => t.id !== '1')).toBeTruthy();
+		const endState = taskReducer( startState,
+			tasksThunks.removeTask.fulfilled(
+				{ todolistID: 'todolist1', taskID: '1' },
+				'todolist1',
+				{ todolistID: 'todolist1', taskID: '1' } ) );
+		
+		expect( endState.todolist1.length ).toBe( 1 );
+		expect( endState.todolist2.length ).toBe( 2 );
+		expect( endState.todolist1.every( ( t ) => t.id !== '1' ) ).toBeTruthy();
 	});
 	
 	it('should add task to correct todolist', () => {
@@ -78,19 +81,22 @@ describe('TaskReducer testing', () => {
 			order: 1,
 			addedDate: new Date(),
 		}
-		const endState = taskReducer( startState, addTaskAC( { todolistID: 'todolist1', task: task } ) );
+		const endState = taskReducer( startState,
+			tasksThunks.addTask.fulfilled( { todoListID: 'todolist1', task: task }, '',
+				{ todoListID: task.todoListId, title: task.title } ) );
 		
-		expect(endState.todolist1.length).toBe(3);
-		expect(endState.todolist2.length).toBe(2);
-		expect(endState.todolist1[0].title).toBe('new task');
-		expect(endState.todolist1[0].priority).toBe(TaskPriorities.Low);
+		expect( endState.todolist1.length ).toBe( 3 );
+		expect( endState.todolist2.length ).toBe( 2 );
+		expect( endState.todolist1[ 0 ].title ).toBe( 'new task' );
+		expect( endState.todolist1[ 0 ].priority ).toBe( TaskPriorities.Low );
 	});
 	
 	it('should change task status', () => {
 		
 		const status = TaskStatuses.Draft
 		const endState = taskReducer( startState,
-			upDateTaskAC( { todolistID: 'todolist1', taskID: '1', newTask: { status } } ) );
+			tasksThunks.upDateTask.fulfilled( { todolistID: 'todolist1', taskID: '1', newTask: { status } }, '',
+				{ newTask:{status},  taskID: '1', todolistID: 'todolist1' } ) );
 		
 		// expect(endState.todolist1[0].isDone).toBeTruthy();
 		// expect(endState.todolist2[0].isDone).toBeFalsy();
@@ -107,7 +113,8 @@ describe('TaskReducer testing', () => {
 	it('should be correct changed title task', () => {
 		const title = 'new task title'
 		
-		const endState = taskReducer(startState, upDateTaskAC({todolistID: 'todolist1',taskID: '1',newTask: {title}}));
+		const endState = taskReducer(startState, tasksThunks.upDateTask.fulfilled(
+			{todolistID: 'todolist1',taskID: '1',newTask: {title}}, '', {taskID: '1', todolistID: 'todolist1', newTask: {title}}));
 		
 		expect(endState['todolist1'][0].title).toBe('new task title')
 		expect(endState.todolist2.length).toBe(2);

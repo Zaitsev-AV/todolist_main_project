@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { useAppSelector } from "@/common/hooks/useAppSelector";
 import {
 	addNewTodoListTC,
-	changedFilterAC, changeTodoListTC,
+	changedFilterAC,
+	changeTodoListTC,
 	removeTodoListTC,
 	setTodoListTC,
 	TodoListsAppType
 } from "./Todolist/todolistReducer";
-import { addTaskTC, removeTaskTC, TaskStateType, upDateTaskTC } from "./Todolist/Task/taskReducer";
+import { TaskStateType, tasksThunks } from "./Todolist/Task/taskReducer";
 import { RequestStatusType } from "@/app/appReducer";
 import { useAppDispatch } from "@/common/hooks/useAppDispatch";
 import { TaskStatuses } from "@/feauters/Api/apiProject";
@@ -30,14 +31,14 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 	}, [] )
 	
 	const removeTask = ( taskID: string, todolistID: string ) => {
-		dispatch( removeTaskTC( todolistID, taskID ) )
+		dispatch( tasksThunks.removeTask( { todolistID, taskID } ) )
 	}
 	
-	const addTask = ( todolistID: string, title: string ) => {
-		dispatch( addTaskTC(todolistID, title) )
+	const addTask = ( todoListID: string, title: string ) => {
+		dispatch( tasksThunks.addTask( { todoListID, title }) )
 	}
 	const onChangeTaskStatus = ( todolistID: string, taskID: string, status: TaskStatuses ) => {
-		dispatch(upDateTaskTC(todolistID, taskID, {status}))
+		dispatch(tasksThunks.upDateTask({todolistID, taskID, newTask: { status }}))
 	}
 	const changedFilter = ( todolistID: string, newFilter: FilterValueType ) => {
 		dispatch( changedFilterAC( { todolistID, newFilter } ) )
@@ -49,7 +50,7 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 		dispatch( addNewTodoListTC( newTodolistTitle ) )
 	}
 	const changedTaskText = ( todolistID: string, taskID: string, newTitle: string ) => {
-		dispatch(upDateTaskTC(todolistID, taskID, {title: newTitle}))
+		dispatch(tasksThunks.upDateTask({todolistID, taskID, newTask:{title: newTitle}}))
 	}
 	const changedTodolistTitle = ( todoListID: string, newTitle: string ) => {
 		dispatch(changeTodoListTC(todoListID, newTitle))
