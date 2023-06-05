@@ -3,9 +3,9 @@ import "./App.css"
 import { useAppSelector } from "@/common/hooks/useAppSelector";
 import { RequestStatusType } from "@/app/appReducer";
 import { Layout } from "@/common/components/Layout/Layout";
-import { Preloader } from "@/common/components/Preloader/Preloader";
 import { useAppDispatch } from "@/common/hooks/useAppDispatch";
 import { authThunks } from "@/feauters/Auth/authReducer";
+import { LoginForm } from "@/feauters/LoginForm/LoginForm";
 
 export type FilterValueType = 'all' | 'completed' | 'active'
 
@@ -17,10 +17,11 @@ useEffect(()=> {
 	dispatch(authThunks.authMe())
 }, [])
 	    console.log('App')
+	    console.log(isLoggedIn + ' app')
 		return (
 			<>
 				<div className={'loaderWrapper'}>
-					{isLoggedIn ? <Layout/> : <Preloader/>}
+					{isLoggedIn ? <Layout/> : <LoginForm/>}
 				</div>
 				
 			</>

@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import s from './LoginForm.module.css'
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { useAppDispatch } from "@/common/hooks/useAppDispatch";
+import { authThunks } from "@/feauters/Auth/authReducer";
+import { useAppSelector } from "@/common/hooks/useAppSelector";
+import { useNavigate } from "react-router-dom";
 
 
 const schema = yup.object( {
@@ -13,13 +17,19 @@ const schema = yup.object( {
 type FormData = yup.InferType<typeof schema>;
 
 export const LoginForm: React.FC = () => {
+	const dispatch = useAppDispatch()
+	const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+	const navigate = useNavigate()
+	useEffect(()=> {
+		isLoggedIn && navigate('/')
+	}, [])
 	
 	const { register,
 		handleSubmit,
 		formState: { errors } } = useForm<FormData>({
 		resolver: yupResolver(schema)
 	});
-	const onSubmit: SubmitHandler<FormData> = data => console.log( data );
+	const onSubmit: SubmitHandler<FormData> = data => dispatch(authThunks.login(data));
 	
 	return (
 		<div className={ s.login_box }>

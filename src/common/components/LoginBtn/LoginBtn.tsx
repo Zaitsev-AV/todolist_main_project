@@ -1,12 +1,18 @@
 import React from 'react';
 import s from './LoginBtn.module.css'
+import { useAppDispatch } from "@/common/hooks/useAppDispatch";
+import { authThunks } from "@/feauters/Auth/authReducer";
 
 
 export const LoginBtn: React.FC = (  ) => {
+	const dispatch = useAppDispatch()
 	
+	const handleLogoutButtonClick  = () => {
+		dispatch(authThunks.logOut())
+	}
 	
 	return (
-		<button className={s.btn}>
+		<button className={s.btn} onClick={handleLogoutButtonClick }>
 			
 			<div className={ s.sign }>
 				<svg viewBox="0 0 512 512">

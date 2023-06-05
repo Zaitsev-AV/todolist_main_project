@@ -64,9 +64,10 @@ export const setTaskTC = ( todoListID: string ) => async ( dispatch: Dispatch ) 
 	try {
 		const res = await taskAPI.setTask( todoListID )
 		dispatch( setTasksAC( { todoListID, tasks: res.data.items } ) )
-		dispatch( setLocalAppStatusAC( { localAppStatus: "succeeded" } ) )
 	} catch ( e ) {
 		    console.warn(e)
+	} finally {
+		dispatch( setLocalAppStatusAC( { localAppStatus: "succeeded" } ) )
 	}
 }
 
@@ -76,7 +77,6 @@ export const addTaskTC = ( todoListID: string, title: string ) => async ( dispat
 		const res = await taskAPI.addTask( todoListID , title)
 		if ( res.data.resultCode === 0 ) {
 			dispatch( addTaskAC( { todolistID: todoListID, task: res.data.data.item } ) )
-			dispatch( setLocalAppStatusAC( { localAppStatus: 'succeeded' } ) )
 		} else {
 			//показать ошибку
 			handleServerAppError(res.data, dispatch)
@@ -85,6 +85,9 @@ export const addTaskTC = ( todoListID: string, title: string ) => async ( dispat
 		// @ts-ignore
 		handleServerNetworkError(error, dispatch)
 		// это для обработки ошибок не связанных с сервером, т.к сервак возвращает код 200 если запрос прошел
+	} finally {
+		dispatch( setLocalAppStatusAC( { localAppStatus: 'succeeded' } ) )
+		
 	}
 }
 
@@ -93,10 +96,11 @@ export const removeTaskTC = ( todolistID: string, taskID: string ) => async ( di
 	try {
 		await taskAPI.removeTask( todolistID, taskID )
 		dispatch( removeTaskAC( { todolistID, taskID } ) )
-		dispatch( setLocalAppStatusAC( { localAppStatus: 'succeeded' } ) )
 	} catch ( error ) {
 		// @ts-ignore
 		handleServerNetworkError(error, dispatch)
+	} finally {
+		dispatch( setLocalAppStatusAC( { localAppStatus: 'succeeded' } ) )
 	}
 }
 
@@ -125,7 +129,6 @@ export const upDateTaskTC = ( todolistID: string, taskID: string, newTask: Updat
 		const res = await taskAPI.updateTask( todolistID, taskID, taskUpDateModel )
 		if ( res.data.resultCode === 0 ) {
 			dispatch( upDateTaskAC( { todolistID, taskID, newTask: taskUpDateModel } ) )
-			dispatch( setLocalAppStatusAC( { localAppStatus: 'succeeded' } ) )
 		} else {
 			//показать ошибку
 			handleServerAppError(res.data, dispatch)
@@ -133,6 +136,8 @@ export const upDateTaskTC = ( todolistID: string, taskID: string, newTask: Updat
 	} catch ( error ) {
 		// @ts-ignore
 		handleServerNetworkError(error, dispatch)
+	} finally {
+		dispatch( setLocalAppStatusAC( { localAppStatus: 'succeeded' } ) )
 	}
 	
 }
