@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Header.module.css'
-import { LoginBtn } from "@/common/components/LoginBtn/LoginBtn";
+import { LoginBtn } from "@/common/components";
 export type HeaderPropsType = {
 
 };

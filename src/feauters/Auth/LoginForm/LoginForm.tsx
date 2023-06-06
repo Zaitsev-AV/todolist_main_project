@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import s from './LoginForm.module.css'
+import s from 'src/feauters/Auth/LoginForm/LoginForm.module.css'
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { useAppDispatch } from "@/common/hooks/useAppDispatch";
 import { authThunks } from "@/feauters/Auth/authReducer";
-import { useAppSelector } from "@/common/hooks/useAppSelector";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "@/common/hooks";
 
 
 const schema = yup.object( {

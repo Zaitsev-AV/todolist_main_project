@@ -1,9 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import s from './Task.module.css'
-import { TaskStatuses } from "@/feauters/Api/apiProject";
-import { CustomCheckbox } from "@/common/components/CustomCheckbox/CustomCheckbox";
-import { EditableText } from "@/common/components/EditableText/EditableText";
-import { DeleteBtn } from "@/common/components/DeleteButton/DeleteBtn";
+import { TaskStatuses } from "@/common/Api/apiProject";
+import { CustomCheckbox, DeleteBtn, EditableText } from "@/common/components";
 
 export type TaskPropsType = {
 	title: string

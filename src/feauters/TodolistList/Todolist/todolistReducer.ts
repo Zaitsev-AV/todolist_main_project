@@ -2,10 +2,9 @@ import { Dispatch } from "redux";
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FilterValueType } from "@/app/App";
-import { todoListAPI, TodoListType, UpDateTodolistArgType } from "@/feauters/Api/apiProject";
+import { ResultCode, todoListAPI, TodoListType, UpDateTodolistArgType } from "@/common/Api/apiProject";
 import { setGlobalAppStatusAC } from "@/app/appReducer";
-import { handleServerAppError, handleServerNetworkError } from "@/common/utils/handelError";
-import { createAppAsyncThunk } from "@/common/utils/createAppAsyncThunks";
+import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "@/common/utils";
 
 const initialState: TodoListsAppType[] = []
 
@@ -66,17 +65,15 @@ const addNewTodolist = createAppAsyncThunk<{ newTodoList: TodoListType }, { todo
 		const { dispatch, rejectWithValue } = thunkAPI
 		try {
 			const res = await todoListAPI.createTodoList( arg.todoListTitle )
-			if ( res.data.resultCode === 0 ) {
+			if ( res.data.resultCode === ResultCode.Success ) {
 				dispatch( setGlobalAppStatusAC( { globalAppStatus: 'succeeded' } ) )
 				return { newTodoList: res.data.data.item }
 			} else {
 				handleServerAppError( res.data, dispatch )
-				dispatch( setGlobalAppStatusAC( { globalAppStatus: 'failed' } ) )
 				return rejectWithValue( '' )
 			}
 		} catch ( error ) {
 			handleServerNetworkError( error, dispatch )
-			dispatch( setGlobalAppStatusAC( { globalAppStatus: 'failed' } ) )
 			return rejectWithValue( '' )
 		}
 	} )
@@ -87,12 +84,11 @@ const removeTodolist = createAppAsyncThunk<{ todolistID: string }, { todolistID:
 		try {
 			dispatch( setGlobalAppStatusAC( { globalAppStatus: 'loading' } ) )
 			const res = await todoListAPI.removeTodoList( todolistID )
-			if ( res.data.resultCode === 0 ) {
+			if ( res.data.resultCode === ResultCode.Success ) {
 				dispatch( setGlobalAppStatusAC( { globalAppStatus: 'succeeded' } ) )
 				return { todolistID }
 			} else {
 				handleServerAppError( res.data, dispatch )
-				dispatch( setGlobalAppStatusAC( { globalAppStatus: 'failed' } ) )
 				return rejectWithValue( '' )
 			}
 		} catch ( error ) {
@@ -108,12 +104,11 @@ const changeTodolist = createAppAsyncThunk<UpDateTodolistArgType, UpDateTodolist
 		try {
 			dispatch( setGlobalAppStatusAC( { globalAppStatus: 'loading' } ) )
 			const res = await todoListAPI.updateTodoList( { todolistID, title } )
-			if ( res.data.resultCode === 0 ) {
+			if ( res.data.resultCode === ResultCode.Success ) {
 				dispatch( setGlobalAppStatusAC( { globalAppStatus: 'succeeded' } ) )
 				return  { todolistID, title }
 			} else {
 				handleServerAppError( res.data, dispatch )
-				dispatch( setGlobalAppStatusAC( { globalAppStatus: 'failed' } ) )
 				return rejectWithValue('')
 			}
 		} catch ( error ) {

@@ -1,18 +1,15 @@
 import React, { useEffect } from 'react';
-import { useAppSelector } from "@/common/hooks/useAppSelector";
 import {
 	changedFilterAC,
 	TodoListsAppType, todolistThunks
 } from "./Todolist/todolistReducer";
 import { TaskStateType, tasksThunks } from "./Todolist/Task/taskReducer";
 import { RequestStatusType } from "@/app/appReducer";
-import { useAppDispatch } from "@/common/hooks/useAppDispatch";
-import { TaskStatuses } from "@/feauters/Api/apiProject";
+import { TaskStatuses } from "@/common/Api/apiProject";
 import { FilterValueType } from "@/app/App";
-import { UniversalInputField } from "@/common/components/UniversalInput/UniversalInputField";
-import { Preloader } from "@/common/components/Preloader/Preloader";
 import { Todolist } from "./Todolist/Todolist";
-import { Notification } from "@/common/components/Notification/Notification";
+import { Notification, Preloader, UniversalInputField } from "@/common/components";
+import { useAppDispatch, useAppSelector } from "@/common/hooks";
 
 
 export type TodoListListPropsType = {};

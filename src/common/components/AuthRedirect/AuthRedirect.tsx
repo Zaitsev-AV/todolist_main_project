@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAppSelector } from "@/common/hooks/useAppSelector";
 import { Navigate, Outlet } from "react-router-dom";
+import { useAppSelector } from "@/common/hooks";
 
 
 export const AuthRedirect: React.FC = ( ) => {

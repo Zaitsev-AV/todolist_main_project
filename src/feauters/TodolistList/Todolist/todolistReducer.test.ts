@@ -63,7 +63,8 @@ describe("todolistReducer", () => {
 	
 	it("CHANGE-TODOLIST-TITLE action", () => {
 		const arg = {todolistID: "1",title: "New Title" }
-		const action = todolistThunks.changeTodolist.fulfilled( arg, '', arg);
+		const action = todolistThunks.changeTodolist.fulfilled
+		( arg, '', arg);
 		const newState = todolistReducer(initialState, action);
 		assert.equal(newState[0].title, "New Title");
 	});
@@ -78,7 +79,9 @@ describe("todolistReducer", () => {
 				filter: "all",
 			},
 		];
-		const action = todolistThunks.setTodolist.fulfilled( { todolists }, '' );
+		const action = todolistThunks.setTodolist.fulfilled(
+			{ todolists },
+			'' );
 		const newState = todolistReducer( initialState, action );
 		assert.equal(newState.length, 1);
 		assert.equal(newState[0].id, "4");

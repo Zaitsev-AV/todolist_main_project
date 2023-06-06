@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-	AddTaskRequestType,
+	AddTaskRequestType, ResultCode,
 	taskAPI,
 	TaskPriorities,
 	TaskStatuses,
 	TaskType,
 	TaskUpdate,
 	UpDateTaskArgType
-} from "@/feauters/Api/apiProject";
+} from "@/common/Api/apiProject";
 import {  todolistThunks } from "../todolistReducer";
 import { setLocalAppStatusAC } from "@/app/appReducer";
-import { handleServerAppError, handleServerNetworkError } from "@/common/utils/handelError";
-import { createAppAsyncThunk } from "@/common/utils/createAppAsyncThunks";
+import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "@/common/utils";
+
 
 
 const initialState: TaskStateType = {}
@@ -78,7 +78,7 @@ const addTask = createAppAsyncThunk<{ todoListID: string, task: TaskType }, AddT
 		try {
 			dispatch( setLocalAppStatusAC( { localAppStatus: "loading" } ) )
 			const res = await taskAPI.addTask( { todoListID, title } )
-			if ( res.data.resultCode === 0 ) {
+			if ( res.data.resultCode === ResultCode.Success ) {
 				return { todoListID: todoListID, task: res.data.data.item }
 			} else {
 				//показать ошибку
@@ -133,7 +133,7 @@ const upDateTask = createAppAsyncThunk<UpDateTaskArgType, UpDateTaskArgType>( 't
 		try {
 			dispatch( setLocalAppStatusAC( { localAppStatus: "loading" } ) )
 			const res = await taskAPI.updateTask( todolistID, taskID, taskUpDateModel )
-			if ( res.data.resultCode === 0 ) {
+			if ( res.data.resultCode === ResultCode.Success ) {
 				// dispatch( upDateTaskAC( { todolistID, taskID, newTask: taskUpDateModel } ) )
 				dispatch( setLocalAppStatusAC( { localAppStatus: 'succeeded' } ) )
 				return { newTask: taskUpDateModel, taskID, todolistID }

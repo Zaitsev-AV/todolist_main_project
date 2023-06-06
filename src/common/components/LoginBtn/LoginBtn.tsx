@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './LoginBtn.module.css'
-import { useAppDispatch } from "@/common/hooks/useAppDispatch";
 import { authThunks } from "@/feauters/Auth/authReducer";
+import { useAppDispatch } from "@/common/hooks";
 
 
 export const LoginBtn: React.FC = (  ) => {

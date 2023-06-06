@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import "./App.css"
-import { useAppSelector } from "@/common/hooks/useAppSelector";
 import { RequestStatusType } from "@/app/appReducer";
-import { Layout } from "@/common/components/Layout/Layout";
-import { useAppDispatch } from "@/common/hooks/useAppDispatch";
+
 import { authThunks } from "@/feauters/Auth/authReducer";
-import { LoginForm } from "@/feauters/LoginForm/LoginForm";
+import { LoginForm } from "@/feauters/Auth/LoginForm/LoginForm";
+import { useAppDispatch, useAppSelector } from "@/common/hooks";
+import { Layout } from "@/common/components";
 
 export type FilterValueType = 'all' | 'completed' | 'active'
 

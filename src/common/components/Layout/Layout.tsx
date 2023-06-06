@@ -1,9 +1,9 @@
 import React from 'react';
 import { Header } from "@/feauters/Header/Header";
 import { Outlet } from "react-router-dom";
-import { LinePreloader } from "@/common/components/LinePreloader/LinePreloader";
-import { useAppSelector } from "@/common/hooks/useAppSelector";
 import { RequestStatusType } from "@/app/appReducer";
+import { useAppSelector } from "@/common/hooks";
+import { LinePreloader } from "@/common/components";
 
 
 export const Layout: React.FC = ( ) => {

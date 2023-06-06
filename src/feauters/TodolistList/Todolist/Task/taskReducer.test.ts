@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest';
 import { removeTasksObjAC, taskReducer, TaskStateType, tasksThunks } from "./taskReducer";
-import { TaskPriorities, TaskStatuses, TaskType } from "@/feauters/Api/apiProject";
+import { TaskPriorities, TaskStatuses, TaskType } from "@/common/Api/apiProject";
 
 
 describe('TaskReducer testing', () => {
@@ -55,12 +55,12 @@ describe('TaskReducer testing', () => {
 		],
 	};
 	it('should remove task from correct todolist', () => {
-		
+		const arg = { todolistID: 'todolist1', taskID: '1' }
 		const endState = taskReducer( startState,
 			tasksThunks.removeTask.fulfilled(
-				{ todolistID: 'todolist1', taskID: '1' },
+				arg,
 				'todolist1',
-				{ todolistID: 'todolist1', taskID: '1' } ) );
+				arg ) );
 		
 		expect( endState.todolist1.length ).toBe( 1 );
 		expect( endState.todolist2.length ).toBe( 2 );
@@ -82,7 +82,9 @@ describe('TaskReducer testing', () => {
 			addedDate: new Date(),
 		}
 		const endState = taskReducer( startState,
-			tasksThunks.addTask.fulfilled( { todoListID: 'todolist1', task: task }, '',
+			tasksThunks.addTask.fulfilled(
+				{ todoListID: 'todolist1', task: task },
+				'',
 				{ todoListID: task.todoListId, title: task.title } ) );
 		
 		expect( endState.todolist1.length ).toBe( 3 );
@@ -112,9 +114,11 @@ describe('TaskReducer testing', () => {
 	
 	it('should be correct changed title task', () => {
 		const title = 'new task title'
-		
+		const args = {todolistID: 'todolist1',taskID: '1',newTask: {title}}
 		const endState = taskReducer(startState, tasksThunks.upDateTask.fulfilled(
-			{todolistID: 'todolist1',taskID: '1',newTask: {title}}, '', {taskID: '1', todolistID: 'todolist1', newTask: {title}}));
+			args,
+			'',
+			args));
 		
 		expect(endState['todolist1'][0].title).toBe('new task title')
 		expect(endState.todolist2.length).toBe(2);

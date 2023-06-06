@@ -5,9 +5,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { store } from "./app/store";
 import { App } from "./app/App";
 import "./index.css"
-import { AuthRedirect } from "@/common/components/AuthRedirect/AuthRedirect";
 import { TodoListList } from "@/feauters/TodolistList/TodoListList";
-import { LoginForm } from "@/feauters/LoginForm/LoginForm";
+import { LoginForm } from "@/feauters/Auth/LoginForm/LoginForm";
+import { AuthRedirect } from "@/common/components";
 
 
 const routes = createBrowserRouter( [

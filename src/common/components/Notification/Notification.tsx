@@ -1,9 +1,9 @@
 import React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, {AlertProps} from '@mui/material/Alert';
-import { useAppSelector } from "../../hooks/useAppSelector";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { setAppErrorAC } from "../../../app/appReducer";
+import { useAppSelector } from "@/common/hooks";
+import { useAppDispatch } from "@/common/hooks";
+import { setAppErrorAC } from "@/app/appReducer";
 
 export type NotificationPropsType = {
 
