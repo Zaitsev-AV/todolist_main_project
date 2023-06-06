@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest';
 import { removeTasksObjAC, taskReducer, TaskStateType, tasksThunks } from "./taskReducer";
-import { TaskPriorities, TaskStatuses, TaskType, UpDateTaskArgType } from "@/feauters/Api/apiProject";
+import { TaskPriorities, TaskStatuses, TaskType } from "@/feauters/Api/apiProject";
 
 
 describe('TaskReducer testing', () => {

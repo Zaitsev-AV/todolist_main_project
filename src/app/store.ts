@@ -24,7 +24,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 
 export const store = configureStore({
 	reducer: {
-		todoLists: todolistReducer,
+		todolists: todolistReducer,
 		tasks: taskReducer,
 		app: appReducer,
 		auth: authReducer

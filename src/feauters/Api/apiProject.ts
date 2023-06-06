@@ -20,8 +20,8 @@ export const todoListAPI = {
 	removeTodoList( todoListID: string ) {
 		return instance.delete<ResponseType>( `todo-lists/${ todoListID }` )
 	},
-	updateTodoList( todoListID: string, title: string ) {
-		return instance.put<ResponseType, AxiosResponse<ResponseType>, { title: string }>(`todo-lists/${ todoListID }`, {title})
+	updateTodoList( arg: UpDateTodolistArgType ) {
+		return instance.put<ResponseType, AxiosResponse<ResponseType>, { title: string }>(`todo-lists/${ arg.todolistID }`, {title:arg.title})
 	}
 }
 
@@ -138,4 +138,9 @@ export type UpDateTaskArgType = {
 	todolistID: string
 	taskID: string
 	newTask: UpdateTaskModelType
+}
+
+export type UpDateTodolistArgType = {
+	todolistID: string
+	title: string
 }

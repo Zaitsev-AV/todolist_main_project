@@ -1,11 +1,9 @@
 import { assert, describe, it } from "vitest";
 import {
-	addNewTodolistAC,
-	changedFilterAC, changeTodolistTitleAC,
-	removeTodolistAC, setTodoListAC,
+	changedFilterAC,
 	todolistReducer,
-	TodoListsAppType
-} from "./Todolist/todolistReducer";
+	TodoListsAppType, todolistThunks
+} from "src/feauters/TodolistList/Todolist/todolistReducer";
 
 
 
@@ -37,7 +35,7 @@ describe("todolistReducer", () => {
 	});
 	
 	it("REMOVE-TODOLIST action", () => {
-		const action = removeTodolistAC( {todolistID: "1" });
+		const action = todolistThunks.removeTodolist.fulfilled( {todolistID: "1" }, '', {todolistID: "1"});
 		const newState = todolistReducer(initialState, action);
 		assert.equal(newState.length, 1);
 		assert.equal(newState[0].id, "2");
@@ -52,8 +50,11 @@ describe("todolistReducer", () => {
 			filter: "all",
 		};
 		
-		const action = addNewTodolistAC( { newTodoList: newTodoList });
-		const newState = todolistReducer(initialState, action);
+		const action = todolistThunks.addNewTodolist.fulfilled(
+			{ newTodoList },
+			'',
+			{ todoListTitle: "TodoList 3" } );
+		const newState = todolistReducer( initialState, action );
 		
 		assert.equal (newState.length, 3);
 		assert.equal(newState[0].id, "3");
@@ -61,13 +62,14 @@ describe("todolistReducer", () => {
 	});
 	
 	it("CHANGE-TODOLIST-TITLE action", () => {
-		const action = changeTodolistTitleAC( {todolistID: "1",newTitle: "New Title" });
+		const arg = {todolistID: "1",title: "New Title" }
+		const action = todolistThunks.changeTodolist.fulfilled( arg, '', arg);
 		const newState = todolistReducer(initialState, action);
 		assert.equal(newState[0].title, "New Title");
 	});
 	
 	test("SET-TODOLIST action", () => {
-		const todoLists = [
+		const todolists = [
 			{
 				id: "4",
 				addedDate: new Date(),
@@ -76,8 +78,8 @@ describe("todolistReducer", () => {
 				filter: "all",
 			},
 		];
-		const action = setTodoListAC( { todoLists });
-		const newState = todolistReducer(initialState, action);
+		const action = todolistThunks.setTodolist.fulfilled( { todolists }, '' );
+		const newState = todolistReducer( initialState, action );
 		assert.equal(newState.length, 1);
 		assert.equal(newState[0].id, "4");
 		assert.equal(newState[0].title, "TodoList 4");

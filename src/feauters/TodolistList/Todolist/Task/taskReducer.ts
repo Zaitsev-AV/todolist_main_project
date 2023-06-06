@@ -8,7 +8,7 @@ import {
 	TaskUpdate,
 	UpDateTaskArgType
 } from "@/feauters/Api/apiProject";
-import { addNewTodolistAC, setTodoListAC } from "../todolistReducer";
+import {  todolistThunks } from "../todolistReducer";
 import { setLocalAppStatusAC } from "@/app/appReducer";
 import { handleServerAppError, handleServerNetworkError } from "@/common/utils/handelError";
 import { createAppAsyncThunk } from "@/common/utils/createAppAsyncThunks";
@@ -41,17 +41,16 @@ const slice = createSlice( {
 			.addCase( setTask.fulfilled, ( state, action ) => {
 				state[ action.payload.todoListID ] = action.payload.tasks
 			} )
-			.addCase( setTodoListAC, ( state, action ) => {
-				action.payload.todoLists.forEach( el => state[ el.id ] = [] )
+			.addCase( todolistThunks.setTodolist.fulfilled, ( state, action ) => {
+				action.payload.todolists.forEach( el => state[ el.id ] = [] )
 			} )
-			.addCase( addNewTodolistAC, ( state, action ) => {
+			.addCase( todolistThunks.addNewTodolist.fulfilled, ( state, action ) => {
 				state[ action.payload.newTodoList.id ] = []
 			} )
 		
 		
 	}
 } )
-
 export const { 	removeTasksObjAC} = slice.actions
 
 // thunks

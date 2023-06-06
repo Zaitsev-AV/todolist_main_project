@@ -1,12 +1,8 @@
 import React, { useEffect } from 'react';
 import { useAppSelector } from "@/common/hooks/useAppSelector";
 import {
-	addNewTodoListTC,
 	changedFilterAC,
-	changeTodoListTC,
-	removeTodoListTC,
-	setTodoListTC,
-	TodoListsAppType
+	TodoListsAppType, todolistThunks
 } from "./Todolist/todolistReducer";
 import { TaskStateType, tasksThunks } from "./Todolist/Task/taskReducer";
 import { RequestStatusType } from "@/app/appReducer";
@@ -22,12 +18,12 @@ import { Notification } from "@/common/components/Notification/Notification";
 export type TodoListListPropsType = {};
 export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 	const {} = props
-	const todoLists = useAppSelector<TodoListsAppType[]>( state => state.todoLists )
+	const todoLists = useAppSelector<TodoListsAppType[]>( state => state.todolists )
 	const tasks = useAppSelector<TaskStateType>( state => state.tasks )
 	const status = useAppSelector<RequestStatusType>( state => state.app.globalAppStatus )
 	const dispatch = useAppDispatch()
 	useEffect( () => {
-		dispatch( setTodoListTC() )
+		dispatch( todolistThunks.setTodolist() )
 	}, [] )
 	
 	const removeTask = ( taskID: string, todolistID: string ) => {
@@ -44,16 +40,16 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 		dispatch( changedFilterAC( { todolistID, newFilter } ) )
 	}
 	const removeTodolist = ( todolistID: string ) => {
-		dispatch(removeTodoListTC(todolistID))
+		dispatch(todolistThunks.removeTodolist( { todolistID }))
 	}
-	const addNewTodolist = ( newTodolistTitle: string ) => {
-		dispatch( addNewTodoListTC( newTodolistTitle ) )
+	const addNewTodolist = ( todoListTitle: string ) => {
+		dispatch( todolistThunks.addNewTodolist( { todoListTitle } ) )
 	}
 	const changedTaskText = ( todolistID: string, taskID: string, newTitle: string ) => {
 		dispatch(tasksThunks.upDateTask({todolistID, taskID, newTask:{title: newTitle}}))
 	}
-	const changedTodolistTitle = ( todoListID: string, newTitle: string ) => {
-		dispatch(changeTodoListTC(todoListID, newTitle))
+	const changedTodolistTitle = ( todolistID: string, title: string ) => {
+		dispatch(todolistThunks.changeTodolist( { todolistID, title }))
 	}
 	return (
 		
@@ -67,7 +63,6 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 					<>
 					{
 						todoLists.map( el => {
-							
 							let taskForTodolist = tasks[ el.id ]
 							el.filter === 'active' ? taskForTodolist = taskForTodolist.filter(
 									el => el.status === TaskStatuses.InProgress )
