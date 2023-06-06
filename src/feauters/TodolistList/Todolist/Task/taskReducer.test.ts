@@ -1,6 +1,7 @@
 import { describe, it } from 'vitest';
 import { removeTasksObjAC, taskReducer, TaskStateType, tasksThunks } from "./taskReducer";
-import { TaskPriorities, TaskStatuses, TaskType } from "@/common/Api/apiProject";
+import { TaskPriorities, TaskStatuses } from "@/common/enums";
+import { TaskType } from "@/feauters/TodolistList/Todolist/Task/taskAPI";
 
 
 describe('TaskReducer testing', () => {
@@ -100,8 +101,8 @@ describe('TaskReducer testing', () => {
 			tasksThunks.upDateTask.fulfilled( { todolistID: 'todolist1', taskID: '1', newTask: { status } }, '',
 				{ newTask:{status},  taskID: '1', todolistID: 'todolist1' } ) );
 		
-		// expect(endState.todolist1[0].isDone).toBeTruthy();
-		// expect(endState.todolist2[0].isDone).toBeFalsy();
+		expect(endState.todolist1[0].status).toBe(status);
+		expect(endState.todolist2[0].status).toBe(TaskStatuses.New);
 	});
 	
 	it('should remove tasks object', () => {

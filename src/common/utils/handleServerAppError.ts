@@ -1,4 +1,4 @@
-import { ResponseType } from "@/common/Api/apiProject";
+import { ResponseType } from "@/common/api/commonAPI";
 import { Dispatch } from "redux";
 import { setAppErrorAC, setGlobalAppStatusAC } from "@/app/appReducer";
 

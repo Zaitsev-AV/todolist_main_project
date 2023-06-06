@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import s from './Todolist.module.css'
 import { FilterValueType } from "@/app/App";
 import { Task } from "./Task/Task";
-import { TaskStatuses, TaskType } from "@/common/Api/apiProject";
 import { tasksThunks } from "@/feauters/TodolistList/Todolist/Task/taskReducer";
 import { useAppDispatch } from "@/common/hooks";
 import { DeleteBtn, EditableText, UniversalInputField } from "@/common/components";
+import { TaskStatuses } from "@/common/enums";
+import { TaskType } from "@/feauters/TodolistList/Todolist/Task";
 
 
 export type TodolistPropsType = {

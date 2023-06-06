@@ -1,17 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-	AddTaskRequestType, ResultCode,
-	taskAPI,
-	TaskPriorities,
-	TaskStatuses,
-	TaskType,
-	TaskUpdate,
-	UpDateTaskArgType
-} from "@/common/Api/apiProject";
-import {  todolistThunks } from "../todolistReducer";
+
+import { todolistThunks } from "../todolistReducer";
 import { setLocalAppStatusAC } from "@/app/appReducer";
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "@/common/utils";
-
+import { ResultCode, TaskPriorities, TaskStatuses } from "@/common/enums";
+import {
+	AddTaskRequestType,
+	taskAPI,
+	TaskType, TaskUpdate,
+	UpDateTaskArgType
+} from "@/feauters/TodolistList/Todolist/Task";
 
 
 const initialState: TaskStateType = {}
@@ -104,7 +102,6 @@ const removeTask = createAppAsyncThunk<{ todolistID: string, taskID: string }, {
 			return { todolistID, taskID }
 		} catch ( error ) {
 			handleServerNetworkError( error, dispatch )
-			dispatch( setLocalAppStatusAC( { localAppStatus: 'failed' } ) )
 			return rejectWithValue( '' )
 		} finally {
 		}
@@ -144,7 +141,6 @@ const upDateTask = createAppAsyncThunk<UpDateTaskArgType, UpDateTaskArgType>( 't
 				return rejectWithValue( '' )
 			}
 		} catch ( error ) {
-			dispatch( setLocalAppStatusAC( { localAppStatus: 'failed' } ) )
 			handleServerNetworkError( error, dispatch )
 			return rejectWithValue( '' )
 		}

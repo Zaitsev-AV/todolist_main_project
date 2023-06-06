@@ -2,9 +2,11 @@ import { Dispatch } from "redux";
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FilterValueType } from "@/app/App";
-import { ResultCode, todoListAPI, TodoListType, UpDateTodolistArgType } from "@/common/Api/apiProject";
 import { setGlobalAppStatusAC } from "@/app/appReducer";
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "@/common/utils";
+import { ResultCode } from "@/common/enums";
+import {  TodoListType, UpDateTodolistArgType } from "@/common/api/commonAPI";
+import { todolistAPI } from "@/feauters/TodolistList/todolistsAPI";
 
 const initialState: TodoListsAppType[] = []
 
@@ -51,7 +53,7 @@ const setTodolist = createAppAsyncThunk<{ todolists: TodoListType[] }, void>( 't
 		const { dispatch, rejectWithValue } = thunkAPI
 		try {
 			dispatch( setGlobalAppStatusAC( { globalAppStatus: 'loading' } ) )
-			const res = await todoListAPI.getTodoLists()
+			const res = await todolistAPI.getTodoLists()
 			dispatch( setGlobalAppStatusAC( { globalAppStatus: 'succeeded' } ) )
 			return { todolists: res.data }
 		} catch ( e ) {
@@ -64,7 +66,7 @@ const addNewTodolist = createAppAsyncThunk<{ newTodoList: TodoListType }, { todo
 	'todolist/addNewTodolist', async ( arg, thunkAPI ) => {
 		const { dispatch, rejectWithValue } = thunkAPI
 		try {
-			const res = await todoListAPI.createTodoList( arg.todoListTitle )
+			const res = await todolistAPI.createTodoList( arg.todoListTitle )
 			if ( res.data.resultCode === ResultCode.Success ) {
 				dispatch( setGlobalAppStatusAC( { globalAppStatus: 'succeeded' } ) )
 				return { newTodoList: res.data.data.item }
@@ -83,7 +85,7 @@ const removeTodolist = createAppAsyncThunk<{ todolistID: string }, { todolistID:
 		const { dispatch, rejectWithValue } = thunkAPI
 		try {
 			dispatch( setGlobalAppStatusAC( { globalAppStatus: 'loading' } ) )
-			const res = await todoListAPI.removeTodoList( todolistID )
+			const res = await todolistAPI.removeTodoList( todolistID )
 			if ( res.data.resultCode === ResultCode.Success ) {
 				dispatch( setGlobalAppStatusAC( { globalAppStatus: 'succeeded' } ) )
 				return { todolistID }
@@ -103,7 +105,7 @@ const changeTodolist = createAppAsyncThunk<UpDateTodolistArgType, UpDateTodolist
 		
 		try {
 			dispatch( setGlobalAppStatusAC( { globalAppStatus: 'loading' } ) )
-			const res = await todoListAPI.updateTodoList( { todolistID, title } )
+			const res = await todolistAPI.updateTodoList( { todolistID, title } )
 			if ( res.data.resultCode === ResultCode.Success ) {
 				dispatch( setGlobalAppStatusAC( { globalAppStatus: 'succeeded' } ) )
 				return  { todolistID, title }

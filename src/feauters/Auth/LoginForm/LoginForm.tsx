@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import s from 'src/feauters/Auth/LoginForm/LoginForm.module.css'
+import s from './LoginForm.module.css'
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";

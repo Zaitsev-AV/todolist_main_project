@@ -5,11 +5,11 @@ import {
 } from "./Todolist/todolistReducer";
 import { TaskStateType, tasksThunks } from "./Todolist/Task/taskReducer";
 import { RequestStatusType } from "@/app/appReducer";
-import { TaskStatuses } from "@/common/Api/apiProject";
 import { FilterValueType } from "@/app/App";
 import { Todolist } from "./Todolist/Todolist";
 import { Notification, Preloader, UniversalInputField } from "@/common/components";
 import { useAppDispatch, useAppSelector } from "@/common/hooks";
+import { TaskStatuses } from "@/common/enums";
 
 
 export type TodoListListPropsType = {};
