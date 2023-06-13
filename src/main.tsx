@@ -28,11 +28,11 @@ const routes = createBrowserRouter( [
                     }
                 ]
             },
-            {
-                path:"/login",
-                element: <LoginForm/>,
-            }
         ]
+    },
+    {
+        path:'/login',
+        element: <LoginForm/>
     }
 ])
 ReactDOM.createRoot( document.getElementById( 'root' ) as HTMLElement ).render(
