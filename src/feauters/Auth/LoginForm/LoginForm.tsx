@@ -19,16 +19,20 @@ export const LoginForm: React.FC = () => {
 	const dispatch = useAppDispatch()
 	const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
 	const navigate = useNavigate()
+	
+	
 	useEffect(()=> {
-		isLoggedIn && navigate('/')
-	}, [])
+		if ( isLoggedIn ) return  navigate('/')
+	}, [isLoggedIn])
 	
 	const { register,
 		handleSubmit,
 		formState: { errors } } = useForm<FormData>({
 		resolver: yupResolver(schema)
 	});
-	const onSubmit: SubmitHandler<FormData> = data => dispatch(authThunks.login(data));
+	const onSubmit: SubmitHandler<FormData> = data => {
+		dispatch( authThunks.login( data ) );
+	}
 	
 	return (
 		<div className={ s.login_box }>
@@ -58,7 +62,6 @@ export const LoginForm: React.FC = () => {
 						name="rememberMe"
 						type="checkbox"/>
 					<label className={s.checkbox}>Remember me</label>
-					<div className={s.error}>{ errors.password?.message }</div>
 				</div>
 				<button type='submit'>
 					<span></span>

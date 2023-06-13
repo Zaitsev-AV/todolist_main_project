@@ -8,6 +8,8 @@ import "./index.css"
 import { TodoListList } from "@/feauters/TodolistList/TodoListList";
 import { LoginForm } from "@/feauters/Auth/LoginForm/LoginForm";
 import { AuthRedirect } from "@/common/components";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const routes = createBrowserRouter( [
@@ -17,7 +19,7 @@ const routes = createBrowserRouter( [
         errorElement: <h1>Error</h1>,
         children: [
             {
-                path: '/',
+                path: "/",
                 element: <AuthRedirect/>,
                 children: [
                     {
@@ -27,14 +29,8 @@ const routes = createBrowserRouter( [
                 ]
             },
             {
-                path:'/login',
+                path:"/login",
                 element: <LoginForm/>,
-                children: [
-                    // {
-                    //     path: "/auth/login",
-                    //     element: <Login/>,
-                    // }
-                ]
             }
         ]
     }
@@ -42,6 +38,18 @@ const routes = createBrowserRouter( [
 ReactDOM.createRoot( document.getElementById( 'root' ) as HTMLElement ).render(
  
         <Provider store={ store }>
+            <ToastContainer
+                position="bottom-left"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
             <RouterProvider router={routes}/>
         </Provider>
 )

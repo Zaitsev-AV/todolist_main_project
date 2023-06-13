@@ -1,11 +1,9 @@
-import { Dispatch } from "redux";
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FilterValueType } from "@/app/App";
 import { setGlobalAppStatusAC } from "@/app/appReducer";
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "@/common/utils";
 import { ResultCode } from "@/common/enums";
-import {  TodoListType, UpDateTodolistArgType } from "@/common/api/commonAPI";
+import { TodoListType, UpDateTodolistArgType } from "@/common/api/commonAPI";
 import { todolistAPI } from "@/feauters/TodolistList/todolistsAPI";
 
 const initialState: TodoListsAppType[] = []

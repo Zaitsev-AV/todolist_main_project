@@ -1,11 +1,8 @@
 import React from 'react';
 import s from './Header.module.css'
 import { LoginBtn } from "@/common/components";
-export type HeaderPropsType = {
 
-};
-export const Header: React.FC<HeaderPropsType> = ( props ) => {
-	const {  } = props
+export const Header: React.FC = (  ) => {
 	    console.log("header")
 	return (
 		<header className={s.wrapper}>
