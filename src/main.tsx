@@ -11,7 +11,7 @@ import { AuthRedirect } from "@/common/components";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-
+//todo вынести в отдельный компонент
 const routes = createBrowserRouter( [
     {
         path: "/",

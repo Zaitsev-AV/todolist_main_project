@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { authThunks } from "@/feauters/Auth/authReducer";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/common/hooks";
+import { LoginInfo } from "@/common/components/LoginInfo/LoginInfo";
 
 
 const schema = yup.object( {
@@ -37,6 +38,7 @@ export const LoginForm: React.FC = () => {
 	return (
 		<div className={ s.login_box }>
 			<p>Login</p>
+			<LoginInfo/>
 			<form onSubmit={ handleSubmit( onSubmit ) }>
 				<div className={ s.user_box }>
 					<input

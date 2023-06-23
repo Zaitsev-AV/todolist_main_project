@@ -54,7 +54,6 @@ export const TodoListList: React.FC<TodoListListPropsType> = ( props ) => {
 			<div>
 				<UniversalInputField callBack={ addNewTodolist } type={'todo'}/>
 			</div>
-			<Notification/>
 			<div className={ 'app' }>
 				{ status === 'loading' ?( <span className='preloader'><Preloader/></span> ) :
 					<>
