@@ -1,12 +1,12 @@
 import { ResponseType } from "@/common/api/commonAPI";
 import { Dispatch } from "redux";
-import { setAppErrorAC, setGlobalAppStatusAC } from "@/app/appReducer";
+import { setAppError, setGlobalAppStatus } from "@/app/appReducer";
 
 export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch) => {
 	if (data.messages.length) {
-		dispatch(setAppErrorAC({error: data.messages[0]}))
+		dispatch(setAppError({error: data.messages[0]}))
 	} else {
-		dispatch(setAppErrorAC({error:'Some error occurred'}))
+		dispatch(setAppError({error:'Some error occurred'}))
 	}
-	dispatch(setGlobalAppStatusAC({globalAppStatus:'failed'}))
+	dispatch(setGlobalAppStatus({globalAppStatus:'failed'}))
 }

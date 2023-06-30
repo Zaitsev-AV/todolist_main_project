@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { todolistThunks } from "../todolistReducer";
-import { setLocalAppStatusAC } from "@/app/appReducer";
+import { setLocalAppStatus } from "@/app/appReducer";
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "@/common/utils";
 import { ResultCode, TaskPriorities, TaskStatuses } from "@/common/enums";
 import {
@@ -56,16 +56,15 @@ export const { 	removeTasksObjAC} = slice.actions
 const setTask = createAppAsyncThunk<{ todoListID: string, tasks: TaskType[] }, string>
 ( 'tasks/setTask', async ( todoListID, thunkAPI ) => {
 	const { dispatch, rejectWithValue } = thunkAPI
-	dispatch( setLocalAppStatusAC( { localAppStatus: "loading" } ) )
+	dispatch( setLocalAppStatus( { localAppStatus: "loading" } ) )
 	try {
 		const res = await taskAPI.getTasks( todoListID )
-		// dispatch( setTasksAC( {  todoListID, tasks: res.data.items } ) )
 		return { todoListID, tasks: res.data.items }
-	} catch ( e: any ) {
-		handleServerNetworkError( e, dispatch )
+	} catch ( error ) {
+		handleServerNetworkError( error, dispatch )
 		return rejectWithValue( null )
 	} finally {
-		dispatch( setLocalAppStatusAC( { localAppStatus: "succeeded" } ) )
+		dispatch( setLocalAppStatus( { localAppStatus: "succeeded" } ) )
 	}
 } )
 
@@ -74,7 +73,7 @@ const addTask = createAppAsyncThunk<{ todoListID: string, task: TaskType }, AddT
 	async ( { todoListID, title }, thunkAPI ) => {
 		const { dispatch, rejectWithValue } = thunkAPI
 		try {
-			dispatch( setLocalAppStatusAC( { localAppStatus: "loading" } ) )
+			dispatch( setLocalAppStatus( { localAppStatus: "loading" } ) )
 			const res = await taskAPI.addTask( { todoListID, title } )
 			if ( res.data.resultCode === ResultCode.Success ) {
 				return { todoListID: todoListID, task: res.data.data.item }
@@ -88,7 +87,7 @@ const addTask = createAppAsyncThunk<{ todoListID: string, task: TaskType }, AddT
 			return rejectWithValue( '' )
 			// это для обработки ошибок не связанных с сервером, т.к сервак возвращает код 200 если запрос прошел
 		} finally {
-			dispatch( setLocalAppStatusAC( { localAppStatus: 'succeeded' } ) )
+			dispatch( setLocalAppStatus( { localAppStatus: 'succeeded' } ) )
 		}
 	} )
 
@@ -96,14 +95,13 @@ const removeTask = createAppAsyncThunk<{ todolistID: string, taskID: string }, {
 	'tasks/removeTask', async ( { todolistID, taskID }, thunkAPI ) => {
 		const { dispatch, rejectWithValue } = thunkAPI
 		try {
-			dispatch( setLocalAppStatusAC( { localAppStatus: "loading" } ) )
+			dispatch( setLocalAppStatus( { localAppStatus: "loading" } ) )
 			await taskAPI.removeTask( todolistID, taskID )
-			dispatch( setLocalAppStatusAC( { localAppStatus: 'succeeded' } ) )
+			dispatch( setLocalAppStatus( { localAppStatus: 'succeeded' } ) )
 			return { todolistID, taskID }
 		} catch ( error ) {
 			handleServerNetworkError( error, dispatch )
 			return rejectWithValue( '' )
-		} finally {
 		}
 	} )
 
@@ -128,15 +126,14 @@ const upDateTask = createAppAsyncThunk<UpDateTaskArgType, UpDateTaskArgType>( 't
 			...newTask // здесь мы затираем в объекте который отправим на сервер поля которые изменились.
 		}
 		try {
-			dispatch( setLocalAppStatusAC( { localAppStatus: "loading" } ) )
+			dispatch( setLocalAppStatus( { localAppStatus: "loading" } ) )
 			const res = await taskAPI.updateTask( todolistID, taskID, taskUpDateModel )
 			if ( res.data.resultCode === ResultCode.Success ) {
-				// dispatch( upDateTaskAC( { todolistID, taskID, newTask: taskUpDateModel } ) )
-				dispatch( setLocalAppStatusAC( { localAppStatus: 'succeeded' } ) )
+				dispatch( setLocalAppStatus( { localAppStatus: 'succeeded' } ) )
 				return { newTask: taskUpDateModel, taskID, todolistID }
 			} else {
 				//показать ошибку
-				dispatch( setLocalAppStatusAC( { localAppStatus: 'failed' } ) )
+				dispatch( setLocalAppStatus( { localAppStatus: 'failed' } ) )
 				handleServerAppError( res.data, dispatch )
 				return rejectWithValue( '' )
 			}

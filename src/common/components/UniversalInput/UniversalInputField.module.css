@@ -131,8 +131,6 @@
     background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
 }
 
-/*todo input*/
-
 .inputGroup {
     display: flex;
     flex-direction: row;

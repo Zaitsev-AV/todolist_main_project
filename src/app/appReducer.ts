@@ -12,13 +12,13 @@ const slice = createSlice( {
 	name: "app",
 	initialState: initialState,
 	reducers: {
-		setGlobalAppStatusAC: ( state, action: PayloadAction<{ globalAppStatus: RequestStatusType }> ) => {
+		setGlobalAppStatus: ( state, action: PayloadAction<{ globalAppStatus: RequestStatusType }> ) => {
 			state.globalAppStatus = action.payload.globalAppStatus
 		},
-		setLocalAppStatusAC: ( state, action: PayloadAction<{ localAppStatus: RequestStatusType }> ) => {
+		setLocalAppStatus: ( state, action: PayloadAction<{ localAppStatus: RequestStatusType }> ) => {
 			state.localAppStatus = action.payload.localAppStatus
 		},
-		setAppErrorAC: ( state, action: PayloadAction<{ error: null | string }> ) => {
+		setAppError: ( state, action: PayloadAction<{ error: null | string }> ) => {
 			state.error = action.payload.error
 			toast.error(action.payload.error + " 🙈")
 		},
@@ -29,7 +29,7 @@ const slice = createSlice( {
 } )
 
 export const appReducer = slice.reducer
-export const { setGlobalAppStatusAC, setLocalAppStatusAC, setAppErrorAC, setIsInitialized } = slice.actions
+export const { setGlobalAppStatus, setLocalAppStatus, setAppError, setIsInitialized } = slice.actions
 
 //types
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'

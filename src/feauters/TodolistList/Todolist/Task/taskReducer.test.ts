@@ -58,10 +58,7 @@ describe('TaskReducer testing', () => {
 	it('should remove task from correct todolist', () => {
 		const arg = { todolistID: 'todolist1', taskID: '1' }
 		const endState = taskReducer( startState,
-			tasksThunks.removeTask.fulfilled(
-				arg,
-				'todolist1',
-				arg ) );
+			tasksThunks.removeTask.fulfilled( arg,'todolist1', arg ) );
 		
 		expect( endState.todolist1.length ).toBe( 1 );
 		expect( endState.todolist2.length ).toBe( 2 );
